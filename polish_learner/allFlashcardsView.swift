@@ -10,20 +10,21 @@ import SwiftData
 
 struct allFlashcardsView: View {
     @Query var flashcards: [flashcard]
-    @Environment(\.modelContext) var managedContext
+    
     var body: some View {
         
         List {
-            
             ForEach(flashcards) { flashcard in
-                Text(flashcard.frontside)
-                Text(flashcard.backside)
+                VStack{
+                    Text(flashcard.frontside)
+                    Text(flashcard.backside)
+                }
+                
             }
             
         }
     }
 }
 #Preview {
-    allFlashcardsView()
-        .modelContainer(for: flashcard.self, inMemory: true)
+    allFlashcardsView().modelContainer(for: flashcard.self, inMemory: true)
 }

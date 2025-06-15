@@ -14,6 +14,8 @@ struct polish_learnerApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(for: flashcard.self)
+            allFlashcardsView().modelContainer(for: flashcard.self)
         }
     }
+    
 }

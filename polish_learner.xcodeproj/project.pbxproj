@@ -6,23 +6,34 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249452DDB8DAF00FF66EB /* ContentView.swift */; };
+		7492494B2DDB8DAF00FF66EB /* flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249462DDB8DAF00FF66EB /* flashcard.swift */; };
+		7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */; };
+		7492494D2DDB8DAF00FF66EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749249442DDB8DAF00FF66EB /* Assets.xcassets */; };
+		749249502DDC6C9900FF66EB /* allFlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7492494F2DDC6C8F00FF66EB /* allFlashcardsView.swift */; };
+		74ED20A72DE2085300883C92 /* AI_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ED20A62DE2084300883C92 /* AI_API.swift */; };
+		74ED20AA2DE20F1500883C92 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 74ED20A92DE20F1500883C92 /* GoogleGenerativeAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7492492C2DD9F9BD00FF66EB /* polish_learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polish_learner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		749249442DDB8DAF00FF66EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		749249452DDB8DAF00FF66EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		749249462DDB8DAF00FF66EB /* flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flashcard.swift; sourceTree = "<group>"; };
+		749249472DDB8DAF00FF66EB /* polish_learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = polish_learner.entitlements; sourceTree = "<group>"; };
+		749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = polish_learnerApp.swift; sourceTree = "<group>"; };
+		7492494F2DDC6C8F00FF66EB /* allFlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = allFlashcardsView.swift; sourceTree = "<group>"; };
+		74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "polish-learner-Info.plist"; sourceTree = SOURCE_ROOT; };
+		74ED20A62DE2084300883C92 /* AI_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI_API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		7492492E2DD9F9BD00FF66EB /* polish_learner */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = polish_learner;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		749249292DD9F9BD00FF66EB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ED20AA2DE20F1500883C92 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +43,7 @@
 		749249232DD9F9BD00FF66EB = {
 			isa = PBXGroup;
 			children = (
-				7492492E2DD9F9BD00FF66EB /* polish_learner */,
+				749249492DDB8DAF00FF66EB /* polish_learner */,
 				7492492D2DD9F9BD00FF66EB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +54,21 @@
 				7492492C2DD9F9BD00FF66EB /* polish_learner.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		749249492DDB8DAF00FF66EB /* polish_learner */ = {
+			isa = PBXGroup;
+			children = (
+				74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */,
+				74ED20A62DE2084300883C92 /* AI_API.swift */,
+				7492494F2DDC6C8F00FF66EB /* allFlashcardsView.swift */,
+				749249442DDB8DAF00FF66EB /* Assets.xcassets */,
+				749249452DDB8DAF00FF66EB /* ContentView.swift */,
+				749249462DDB8DAF00FF66EB /* flashcard.swift */,
+				749249472DDB8DAF00FF66EB /* polish_learner.entitlements */,
+				749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */,
+			);
+			path = polish_learner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,11 +86,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7492492E2DD9F9BD00FF66EB /* polish_learner */,
-			);
 			name = polish_learner;
 			packageProductDependencies = (
+				74ED20A92DE20F1500883C92 /* GoogleGenerativeAI */,
 			);
 			productName = polish_learner;
 			productReference = 7492492C2DD9F9BD00FF66EB /* polish_learner.app */;
@@ -94,6 +118,9 @@
 			);
 			mainGroup = 749249232DD9F9BD00FF66EB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				74ED20A82DE20F1500883C92 /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7492492D2DD9F9BD00FF66EB /* Products */;
 			projectDirPath = "";
@@ -109,6 +136,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7492494D2DDB8DAF00FF66EB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +147,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */,
+				749249502DDC6C9900FF66EB /* allFlashcardsView.swift in Sources */,
+				7492494B2DDB8DAF00FF66EB /* flashcard.swift in Sources */,
+				74ED20A72DE2085300883C92 /* AI_API.swift in Sources */,
+				7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +287,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "polish-learner-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -279,6 +313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "polish-learner-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -315,6 +350,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		74ED20A82DE20F1500883C92 /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google-gemini/deprecated-generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74ED20A92DE20F1500883C92 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74ED20A82DE20F1500883C92 /* XCRemoteSwiftPackageReference "deprecated-generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 749249242DD9F9BD00FF66EB /* Project object */;
 }
