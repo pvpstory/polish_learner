@@ -12,6 +12,8 @@ struct allFlashcardsView: View {
     @Query var flashcards: [flashcard]
     
     var body: some View {
+        VStack{
+            
         
         List {
             ForEach(flashcards) { flashcard in
@@ -24,6 +26,7 @@ struct allFlashcardsView: View {
             
         }
     }
+}
 }
 #Preview {
     allFlashcardsView().modelContainer(for: flashcard.self, inMemory: true)
