@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7407E9D52E1091BC0088FA03 /* Untitled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407E9D42E1091B80088FA03 /* Untitled.swift */; };
+		7407E9D72E1091CB0088FA03 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407E9D62E1091CB0088FA03 /* SwiftUIView.swift */; };
 		7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249452DDB8DAF00FF66EB /* ContentView.swift */; };
 		7492494B2DDB8DAF00FF66EB /* flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249462DDB8DAF00FF66EB /* flashcard.swift */; };
 		7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7407E9D42E1091B80088FA03 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		7407E9D62E1091CB0088FA03 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		7492492C2DD9F9BD00FF66EB /* polish_learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polish_learner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		749249442DDB8DAF00FF66EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		749249452DDB8DAF00FF66EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 		749249492DDB8DAF00FF66EB /* polish_learner */ = {
 			isa = PBXGroup;
 			children = (
+				7407E9D42E1091B80088FA03 /* Untitled.swift */,
+				7407E9D62E1091CB0088FA03 /* SwiftUIView.swift */,
 				74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */,
 				74ED20A62DE2084300883C92 /* AI_API.swift */,
 				7492494F2DDC6C8F00FF66EB /* allFlashcardsView.swift */,
@@ -147,6 +153,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7407E9D52E1091BC0088FA03 /* Untitled.swift in Sources */,
+				7407E9D72E1091CB0088FA03 /* SwiftUIView.swift in Sources */,
 				7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */,
 				749249502DDC6C9900FF66EB /* allFlashcardsView.swift in Sources */,
 				7492494B2DDB8DAF00FF66EB /* flashcard.swift in Sources */,

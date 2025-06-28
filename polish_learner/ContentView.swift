@@ -26,8 +26,36 @@ struct Item: Decodable, Identifiable { // Identifiable for SwiftUI lists
     let price: Double
 }
 
-
+enum Screen: Hashable {
+    case first
+    case second
+}
 struct ContentView: View {
+    @State var selection: Screen? = .first
+    var body: some View{
+        NavigationSplitView{
+            List(selection: $selection){
+                Label("Main View", systemImage: "1.circle").tag(Screen.first)
+                Label("All cards", systemImage: "2.circle").tag(Screen.second)
+                
+            }
+            .navigationTitle("Language learner")
+            .navigationSplitViewColumnWidth(220)
+        } detail: {
+            switch selection{
+            case .first:
+                MainView()
+            case .second:
+                allFlashcardsView()
+            case .none:
+                Text("Select a view")
+            }
+        }
+        
+    }
+    
+}
+struct MainView: View {
     @Query  var flashcards: [flashcard]
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
@@ -66,8 +94,12 @@ struct ContentView: View {
         let new_flashcard = flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
-            backside: "Apple",
-            definition: "A round fruit with firm, white flesh and a green or red skin.",
+            backside:  """
+                APPLE   
+                "Lubię jeść czerwone jabłka. (I like to eat red apples.)",
+                "Szarlotka jest zrobiona z jabłek. (Apple pie is made from apples.)"
+                """,
+            definition: "aple",
             examples: [
                 "Lubię jeść czerwone jabłka. (I like to eat red apples.)",
                 "Szarlotka jest zrobiona z jabłek. (Apple pie is made from apples.)"
@@ -93,23 +125,7 @@ struct ContentView: View {
     @State private var customExample: String = ""
     var body: some View {
         
-        NavigationStack {
-            
             VStack {
-                VStack{
-                    Button("add sample",action:addSamples)
-                    List{
-                        ForEach(flashcards) { flashcard in
-                            Text(flashcard.frontside)
-                        }
-                    }
-                }
-                NavigationLink {
-                    allFlashcardsView()
-                } label: {
-                    Label("View All Flashcards", systemImage: "list.bullet.rectangle.portrait")
-                }
-                .padding(.bottom) // Add some spacing
                 if (definitions.isEmpty){
                     TextField("Enter",text: $text).onSubmit {
                         Task {
@@ -169,7 +185,7 @@ struct ContentView: View {
         }
         
     }
-}
+
 
 #Preview {
     ContentView()

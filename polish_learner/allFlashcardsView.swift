@@ -10,19 +10,22 @@ import SwiftData
 
 struct allFlashcardsView: View {
     @Query var flashcards: [flashcard]
+    @Environment(\.modelContext) private var context
+    
+    func deleteFlashcards(_ indexSet: IndexSet) {
+        for index in indexSet {
+            let flashcard = flashcards[index]
+            context.delete(flashcard)
+        }
+    }
     
     var body: some View {
         VStack{
-            
-        
         List {
             ForEach(flashcards) { flashcard in
-                VStack{
-                    Text(flashcard.frontside)
-                    Text(flashcard.backside)
-                }
+                FlashcardView(flashcard: flashcard)
                 
-            }
+            }.onDelete(perform: deleteFlashcards)
             
         }
     }
