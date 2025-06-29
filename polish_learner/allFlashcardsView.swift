@@ -9,27 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct allFlashcardsView: View {
-    @Query var flashcards: [flashcard]
-    @Environment(\.modelContext) private var context
+    @Query(sort: \flashcard.frontside) var flashcards: [flashcard]
+    @State var searchText: String = ""
     
-    func deleteFlashcards(_ indexSet: IndexSet) {
-        for index in indexSet {
-            let flashcard = flashcards[index]
-            context.delete(flashcard)
-        }
-    }
-    
+
     var body: some View {
-        VStack{
-        List {
-            ForEach(flashcards) { flashcard in
-                FlashcardView(flashcard: flashcard)
-                
-            }.onDelete(perform: deleteFlashcards)
-            
+        NavigationStack{
+            FlashcardListView(searchText: searchText).searchable(text: $searchText)
         }
     }
-}
 }
 #Preview {
     allFlashcardsView().modelContainer(for: flashcard.self, inMemory: true)
