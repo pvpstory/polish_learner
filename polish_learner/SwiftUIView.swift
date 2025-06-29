@@ -12,6 +12,7 @@ struct FlashcardView: View {
     @State var isEditing = false
     @FocusState private var isNameFieldFocused: Bool
     @FocusState private var isDetailsFieldFocused: Bool
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         HStack(spacing: 25){
             VStack(alignment: .leading) {
@@ -60,7 +61,19 @@ struct FlashcardView: View {
                 }
             }) {
                 Text(isEditing ? "Done" : "Edit")
-            }
+            }.buttonStyle(.bordered)
+            Button(action: {
+                withAnimation {
+                    modelContext.delete(flashcard)
+                }
+                
+                
+            }) {
+                Image(systemName: "trash")
+                
+            }.tint(.red)
+                .buttonStyle(.borderless)
+            
             
         }.padding(.vertical,10)
     }
