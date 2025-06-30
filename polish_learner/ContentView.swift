@@ -29,6 +29,7 @@ struct Item: Decodable, Identifiable { // Identifiable for SwiftUI lists
 enum Screen: Hashable {
     case first
     case second
+    case third
 }
 struct ContentView: View {
     @State var selection: Screen? = .first
@@ -37,6 +38,7 @@ struct ContentView: View {
             List(selection: $selection){
                 Label("Main View", systemImage: "1.circle").tag(Screen.first)
                 Label("All cards", systemImage: "2.circle").tag(Screen.second)
+                Label("Learn Phase", systemImage: "3.circle").tag(Screen.third)
                 
             }
             .navigationTitle("Language learner")
@@ -47,6 +49,8 @@ struct ContentView: View {
                 MainView()
             case .second:
                 allFlashcardsView()
+            case .third:
+                LeanPhaseView()
             case .none:
                 Text("Select a view")
             }
