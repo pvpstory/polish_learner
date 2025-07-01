@@ -30,6 +30,7 @@ enum Screen: Hashable {
     case first
     case second
     case third
+    case fourth
 }
 struct ContentView: View {
     @State var selection: Screen? = .first
@@ -38,8 +39,8 @@ struct ContentView: View {
             List(selection: $selection){
                 Label("Main View", systemImage: "1.circle").tag(Screen.first)
                 Label("All cards", systemImage: "2.circle").tag(Screen.second)
-                Label("Learn Phase", systemImage: "3.circle").tag(Screen.third)
-                
+                Label("Learn Phase Flashcards", systemImage: "3.circle").tag(Screen.third)
+                Label("Learn", systemImage: "4.circle").tag(Screen.fourth)
             }
             .navigationTitle("Language learner")
             .navigationSplitViewColumnWidth(220)
@@ -51,6 +52,8 @@ struct ContentView: View {
                 allFlashcardsView()
             case .third:
                 LearnPhaseAllMainView()
+            case .fourth:
+                LearnPhaseMainView()
             case .none:
                 Text("Select a view")
             }
@@ -60,11 +63,11 @@ struct ContentView: View {
     
 }
 struct MainView: View {
-    @Query  var flashcards: [flashcard]
+    @Query  var flashcards: [Flashcard]
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
     func addSamples(){
-        let example = flashcard(
+        let example = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
             backside: "Apple",
@@ -80,8 +83,6 @@ struct MainView: View {
     func submittedWord() async{
         
         
-    
-
         definitions.append(definitionEntry(definition: "something", examples: []))
         definitions.append(definitionEntry(definition: "something2", examples: []))
     }
@@ -95,7 +96,7 @@ struct MainView: View {
         definitions[0].examples.append(exampleEntry(example: "duradura dada"))
     }
     func submitExamples(){
-        let new_flashcard = flashcard(
+        let new_flashcard = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
             backside:  """
@@ -130,6 +131,9 @@ struct MainView: View {
     var body: some View {
         
             VStack {
+                Button(action: addSamples) {
+                    Text("add")
+                }
                 if (definitions.isEmpty){
                     TextField("Enter",text: $text).onSubmit {
                         Task {
@@ -193,5 +197,5 @@ struct MainView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: flashcard.self, inMemory: true)
+        .modelContainer(for: Flashcard.self, inMemory: true)
 }

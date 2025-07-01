@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FlashCardView: View {
-    let flashcard: flashcard
+    let flashcard: Flashcard
     @State  var isFlipped: Bool = false
 
     @State  var rotation: Double = 0
@@ -25,7 +25,7 @@ struct FlashCardView: View {
             CardSide(text: flashcard.backside)
                 .opacity(isFlipped ? 1 : 0)
                 .rotation3DEffect(
-                    .degrees(rotation + 180), // Start with the back facing away
+                    .degrees(rotation + 180),
                     axis: (x: 0.0, y: 1.0, z: 0.0)
                 )
 
@@ -36,9 +36,9 @@ struct FlashCardView: View {
     }
     private func flipCard() {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-            isFlipped.toggle()
             rotation += 180
         }
+        isFlipped.toggle()
     }
 }
 

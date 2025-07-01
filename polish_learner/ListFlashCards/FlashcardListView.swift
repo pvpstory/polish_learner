@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct FlashCardListView: View {
-    @Query(sort: \flashcard.frontside) var flashcards: [flashcard]
+    @Query(sort: \Flashcard.frontside) var flashcards: [Flashcard]
     
     var body: some View {
         
@@ -22,14 +22,14 @@ struct FlashCardListView: View {
             }
         }
     init(searchText: String){
-        let predicate: Predicate<flashcard>?
+        let predicate: Predicate<Flashcard>?
         
         
         if searchText.isEmpty {
             predicate = nil
         }
         else {
-            predicate = #Predicate<flashcard>{ flashcard in
+            predicate = #Predicate<Flashcard>{ flashcard in
                 flashcard.frontside.contains(searchText) || flashcard.backside.contains(searchText)
             }
         }

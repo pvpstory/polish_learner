@@ -13,7 +13,7 @@ struct polish_learnerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: flashcard.self)
+                .modelContainer(for: Flashcard.self)
         }
     }
     

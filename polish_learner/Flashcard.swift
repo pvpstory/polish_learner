@@ -15,7 +15,7 @@ enum Stage: String {
 }
 
 @Model
-class flashcard {
+class Flashcard {
     @Attribute(.unique) var id: UUID
      var frontside: String
      var backside: String

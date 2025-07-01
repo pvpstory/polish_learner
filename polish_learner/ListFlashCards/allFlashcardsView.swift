@@ -9,16 +9,16 @@ import SwiftUI
 import SwiftData
 
 struct allFlashcardsView: View {
-    @Query(sort: \flashcard.frontside) var flashcards: [flashcard]
+    @Query(sort: \Flashcard.frontside) var flashcards: [Flashcard]
     @State var searchText: String = ""
     
 
     var body: some View {
         NavigationStack{
-            FlashcardListView(searchText: searchText).searchable(text: $searchText)
+            FlashCardListView(searchText: searchText).searchable(text: $searchText)
         }
     }
 }
 #Preview {
-    allFlashcardsView().modelContainer(for: flashcard.self, inMemory: true)
+    allFlashcardsView().modelContainer(for: Flashcard.self, inMemory: true)
 }
