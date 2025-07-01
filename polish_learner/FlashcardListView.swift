@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct FlashcardListView: View {
+struct FlashCardListView: View {
     @Query(sort: \flashcard.frontside) var flashcards: [flashcard]
     
     var body: some View {
