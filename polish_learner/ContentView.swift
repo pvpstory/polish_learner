@@ -50,7 +50,7 @@ struct ContentView: View {
             case .second:
                 allFlashcardsView()
             case .third:
-                LeanPhaseView()
+                LearnPhaseAllMainView()
             case .none:
                 Text("Select a view")
             }
