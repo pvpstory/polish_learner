@@ -16,16 +16,25 @@ struct LearnPhaseMainView: View {
     @State var canClickNext: Bool = false
     var body: some View {
         VStack{
-            Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
-                .font(.title)
-                .position(x: 50, y: 30)
+            
+            
             if flashcardsCoppy.count == 0{
                 Text("Good Boy")
             }
             else{
+                Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
+                    .font(.title)
+                    .position(x: 50, y: 30)
+                if canClickNext{
+                    Button(action: {
+                        incrementIndex()
+                    }) {
+                        Image(systemName: "arrow.right")
+                    }.position(x: 1400, y: 380)
+                }
                 switch flashcardsCoppy[currentIndex].stage {
                 case "new":
-                    MultiChoiceWord(backside: flashcardsCoppy[currentIndex].backside, frontside: flashcardsCoppy[currentIndex].frontside, onAnwer: {}, allOptions: ["tuka","buka","assasin",flashcardsCoppy[currentIndex].frontside])
+                    MultiChoiceWord(backside: flashcardsCoppy[currentIndex].backside, frontside: flashcardsCoppy[currentIndex].frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",flashcardsCoppy[currentIndex].frontside])
                 case "learning":
                     Text("123")
                 case "reviewed":
@@ -34,15 +43,7 @@ struct LearnPhaseMainView: View {
                     Text("def")
                 }
             }
-            
-            if canClickNext{
-                Button(action: {
-                    incrementIndex()
-                }) {
-                    Image(systemName: "arrow.right")
-                }.position(x: 1400, y: 0)
-            }
-            
+                        
         }.task {
             startNewSession()
         }
@@ -59,11 +60,18 @@ struct LearnPhaseMainView: View {
     private func incrementIndex(){
         if currentIndex < flashcardsCoppy.count-1{
             currentIndex+=1
+            canClickNext = false
         }
         else if currentIndex == flashcardsCoppy.count-1 {
-            
+            canClickNext = false
+            currentIndex = 0
             flashcardsCoppy = []
         }
+    }
+    private func onAnswer(isSuccess: Bool){
+        canClickNext = true
+        //change the flashcard
+        
     }
     
 }

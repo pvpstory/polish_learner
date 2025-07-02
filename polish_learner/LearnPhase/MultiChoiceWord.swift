@@ -15,8 +15,9 @@ import SwiftUI
 struct MultiChoiceWord: View {
     let backside: String
     let frontside: String
-    let onAnwer: () -> Void
-    @State var allOptions: [String]
+    let onAnswer: (Bool) -> Void
+    var allOptionsInput: [String]
+    @State var allOptions: [String] = []
     @State var selectedAnswer: String?
     
     private let columns: [GridItem] = [
@@ -25,24 +26,43 @@ struct MultiChoiceWord: View {
     ]
     var body: some View{
         VStack{
+            halfFlashCard(text: backside)
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in
                 buttonAnswer(text: option)}
             }
             
         }.task {
-            allOptions.shuffle()
+            allOptions = allOptionsInput.shuffled()
         }
+        .onChange(of: allOptionsInput){
+            allOptions = allOptionsInput.shuffled()
+            selectedAnswer = nil
+        }
+    }
+    func halfFlashCard(text: String) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 30).fill(.white)
+            Text(backside).font(.headline).foregroundStyle(.black)
+        }.frame(width: 600, height: 600).padding(50)
     }
     func buttonAnswer(text: String) ->  some View {
         Button(action: {
             if selectedAnswer == nil{
                 selectedAnswer = text
             }
-        }){
-            Text(text).font(.title).foregroundStyle(.black)
+            onAnswer(selectedAnswer == frontside)
             
-        }.background(backgroundColorFor(option: text))
+        }){
+            Text(text).font(.headline).frame(maxWidth: .infinity, minHeight: 50)
+                .foregroundStyle(.black)
+                .padding()
+            
+        }
+            .background(backgroundColorFor(option: text))
+            .shadow(radius: 3)
+            .animation(.easeInOut(duration: 0.3), value: selectedAnswer)
+            .disabled(selectedAnswer != nil)
     }
     
     func backgroundColorFor(option: String) -> Color{
