@@ -84,7 +84,4 @@ struct MultiChoiceWord: View {
 }
 
 
-func buttonClicled(answer: String){
-    
-}
 

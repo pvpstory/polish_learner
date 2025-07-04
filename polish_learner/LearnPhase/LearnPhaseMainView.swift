@@ -33,10 +33,11 @@ struct LearnPhaseMainView: View {
                     }.position(x: 1400, y: 380)
                 }
                 switch flashcardsCoppy[currentIndex].stage {
-                case "new":
-                    MultiChoiceWord(backside: flashcardsCoppy[currentIndex].backside, frontside: flashcardsCoppy[currentIndex].frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",flashcardsCoppy[currentIndex].frontside])
                 case "learning":
-                    Text("123")
+                    MultiChoiceWord(backside: flashcardsCoppy[currentIndex].backside, frontside: flashcardsCoppy[currentIndex].frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",flashcardsCoppy[currentIndex].frontside])
+                case "new":
+                    TypeTheWord(backside: flashcardsCoppy[currentIndex].backside, frontside:
+                                    flashcardsCoppy[currentIndex].frontside, onAnswer: onAnswer, TypedWord: "")
                 case "reviewed":
                     Text("123123")
                 default:
