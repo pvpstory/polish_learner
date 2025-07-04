@@ -26,12 +26,11 @@ struct MultiChoiceWord: View {
     ]
     var body: some View{
         VStack{
-            halfFlashCard(text: backside)
+            halfFlashCard(text: backside).padding(.top, -50)
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in
                 buttonAnswer(text: option)}
             }
-            
         }.task {
             allOptions = allOptionsInput.shuffled()
         }
@@ -44,7 +43,7 @@ struct MultiChoiceWord: View {
         ZStack{
             RoundedRectangle(cornerRadius: 30).fill(.white)
             Text(backside).font(.headline).foregroundStyle(.black)
-        }.frame(width: 600, height: 600).padding(50)
+        }.frame(width: 600, height: 600)
     }
     func buttonAnswer(text: String) ->  some View {
         Button(action: {
@@ -54,7 +53,7 @@ struct MultiChoiceWord: View {
             onAnswer(selectedAnswer == frontside)
             
         }){
-            Text(text).font(.headline).frame(maxWidth: .infinity, minHeight: 50)
+            Text(text).font(.headline).frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50)
                 .foregroundStyle(.black)
                 .padding()
             

@@ -32,12 +32,19 @@ struct LearnPhaseMainView: View {
                 Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
                     .font(.title)
                     .position(x: 50, y: 30)
-                if canClickNext{
-                    Button(action: {
-                        incrementIndex()
+                ZStack{
+                    Button(action : {
+                        
                     }) {
                         Image(systemName: "arrow.right")
-                    }.position(x: 1400, y: 380)
+                    }.position(x: 1400, y: 380).opacity(0)
+                    if canClickNext{
+                        Button(action: {
+                            incrementIndex()
+                        }) {
+                            Image(systemName: "arrow.right")
+                        }.position(x: 1400, y: 380)
+                    }
                 }
                 switch currentFlashCard.stage {
                 case "learning":
