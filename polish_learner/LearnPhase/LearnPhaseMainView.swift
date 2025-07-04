@@ -16,19 +16,22 @@ struct FlashcardCoppy{
 }
 
 struct LearnPhaseMainView: View {
-    @Query var learnPhaseFlashCards: [Flashcard]
+    @Query(filter: #Predicate<Flashcard>{ flashcard in
+        flashcard.stage == "new" || flashcard.stage == "learning"
+    }) var learnPhaseFlashCards: [Flashcard]
     @State var flashcardsCoppy: [Flashcard] = []
     @State var currentIndex: Int = 0
     @State var canClickNext: Bool = false
     @State var currentFlashCard: FlashcardCoppy = FlashcardCoppy(frontside: "", backside: "", stage: "")
+    @State var whatToShow: String = "noCards"
     var body: some View {
         VStack{
             
             
-            if flashcardsCoppy.count == 0{
+            if whatToShow == "noCards"{
                 Text("Good Boy")
             }
-            else{
+            else if whatToShow == "cards"{
                 Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
                     .font(.title)
                     .position(x: 50, y: 30)
@@ -47,9 +50,9 @@ struct LearnPhaseMainView: View {
                     }
                 }
                 switch currentFlashCard.stage {
-                case "learning":
-                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",currentFlashCard.frontside])
                 case "new":
+                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",currentFlashCard.frontside])
+                case "learning":
                     TypeTheWord(backside: currentFlashCard.backside, frontside:
                                     currentFlashCard.frontside, onAnswer: onAnswer, TypedWord: "")
                 case "reviewed":
@@ -57,6 +60,15 @@ struct LearnPhaseMainView: View {
                 default:
                     Text("def")
                 }
+            }
+            else if whatToShow == "finishedPortion"{
+                Text("Good boy, good job")
+                Button(action: {
+                    startNewSession()
+                }){
+                    Text("Next")
+                }
+                
             }
                         
         }.task {
@@ -68,10 +80,15 @@ struct LearnPhaseMainView: View {
 
     
     private func startNewSession(){
-        flashcardsCoppy = Array(learnPhaseFlashCards)
-        currentIndex = 0
-        print("triggered")
-        currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage)
+        if learnPhaseFlashCards.count == 0{
+            whatToShow = "noCards"
+        }
+        else{
+            flashcardsCoppy = Array(learnPhaseFlashCards)
+            currentIndex = 0
+            currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage)
+            whatToShow = "cards"
+        }
     }
     private func incrementIndex(){
         
@@ -84,13 +101,26 @@ struct LearnPhaseMainView: View {
             canClickNext = false
             currentIndex = 0
             flashcardsCoppy = []
+            if learnPhaseFlashCards.count == 0{
+                whatToShow = "noCards"
+            }
+            else{
+                whatToShow = "finishedPortion"
+            }
+            
         }
         
     }
     private func onAnswer(isSuccess: Bool){
         canClickNext = true
         if isSuccess{
-            flashcardsCoppy[currentIndex].stage = "learning"
+            if currentFlashCard.stage == "new"{
+                flashcardsCoppy[currentIndex].stage = "learning"
+            }
+            else if currentFlashCard.stage == "learning"{
+                flashcardsCoppy[currentIndex].stage = "reviewed"
+            }
+            
         }
         
     }
