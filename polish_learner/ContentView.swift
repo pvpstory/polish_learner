@@ -66,7 +66,10 @@ struct MainView: View {
     @Query  var flashcards: [Flashcard]
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
-    func addSamples(){
+    func addSamples() async{
+        var myAI = AI()
+        await myAI.give_meaning(prompt: "write me a meaning of polish word (obcy)")
+        
         let example = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
@@ -131,7 +134,12 @@ struct MainView: View {
     var body: some View {
         
             VStack {
-                Button(action: addSamples) {
+                Button(action: {
+                    Task {
+                        await addSamples()
+                        
+                    }
+                }){
                     Text("add")
                 }
                 if (definitions.isEmpty){

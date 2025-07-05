@@ -7,14 +7,22 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseCore
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+  func applicationDidFinishLaunching(_ aNotification: Notification) {
+    FirebaseApp.configure()
+  }
+}
 
 @main
 struct polish_learnerApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(for: Flashcard.self)
         }
     }
-    
+     
 }
