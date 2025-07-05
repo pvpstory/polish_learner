@@ -11,15 +11,22 @@ class AI{
     
     // Create a `GenerativeModel` instance with a model that supports your use case
     
-    func give_meaning(prompt: String) async{
+    func give_meaning(prompt: String) async -> String{
         let model = ai.generativeModel(modelName: "gemini-2.0-flash")
         
         do{
             let response = try await model.generateContent(prompt)
             print(response.text ?? "No text in response.")
+            guard let unwrappedText = response.text, !unwrappedText.isEmpty else{
+                return "error"
+            }
+            return unwrappedText
+            
         }catch{
             print("error")
+            return "error"
         }
+        
     }
 }
 

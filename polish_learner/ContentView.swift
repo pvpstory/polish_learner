@@ -33,6 +33,8 @@ enum Screen: Hashable {
     case fourth
 }
 struct ContentView: View {
+    let firstPrompt = "12312"
+        
     @State var selection: Screen? = .first
     var body: some View{
         NavigationSplitView{
@@ -83,6 +85,9 @@ struct MainView: View {
         
     }
     func submittedWord() async{
+        let myAI = AI()
+        let output = await myAI.give_meaning(prompt: "prompt")
+        //modify the JSON
         
     }
     func submitDefenitions(){
