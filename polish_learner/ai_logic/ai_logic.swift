@@ -2,15 +2,14 @@
 
 
 import FirebaseAI
-class AI {
+
+class AI{
     
     
     // Initialize the Gemini Developer API backend service
     let ai = FirebaseAI.firebaseAI(backend: .googleAI())
     
     // Create a `GenerativeModel` instance with a model that supports your use case
-    
-    
     
     func give_meaning(prompt: String) async{
         let model = ai.generativeModel(modelName: "gemini-2.0-flash")

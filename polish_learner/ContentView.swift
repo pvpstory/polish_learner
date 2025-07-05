@@ -67,9 +67,8 @@ struct MainView: View {
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
     func addSamples() async{
-        var myAI = AI()
-        await myAI.give_meaning(prompt: "write me a meaning of polish word (obcy)")
-        
+        let myAI = AI()
+        await myAI.give_meaning(prompt: "write me most frequent and useful definitions and exampples for those definitions of polish word (obcy). Return me a well structure JSON object with definitions and exa,ples. The definitions and examples must be in polish ")
         let example = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
@@ -85,9 +84,6 @@ struct MainView: View {
     }
     func submittedWord() async{
         
-        
-        definitions.append(definitionEntry(definition: "something", examples: []))
-        definitions.append(definitionEntry(definition: "something2", examples: []))
     }
     func submitDefenitions(){
         print(definitions)
@@ -96,7 +92,7 @@ struct MainView: View {
                 definitions.remove(at: i)
             }
         }
-        definitions[0].examples.append(exampleEntry(example: "duradura dada"))
+        whatToShow = "examples"
     }
     func submitExamples(){
         let new_flashcard = Flashcard(
@@ -131,8 +127,8 @@ struct MainView: View {
     @State private var text = ""
     @State private var customDefinition = ""
     @State private var customExample: String = ""
+    @State private var whatToShow: String = "start"
     var body: some View {
-        
             VStack {
                 Button(action: {
                     Task {
@@ -142,65 +138,64 @@ struct MainView: View {
                 }){
                     Text("add")
                 }
-                if (definitions.isEmpty){
+                if (whatToShow == "start"){
                     TextField("Enter",text: $text).onSubmit {
                         Task {
                         await submittedWord()
+                        whatToShow = "definitions"
                     }
                     }
                 }
-                if(definitions.isEmpty == false){
+                if (whatToShow == "definitions"){
                     List{
-                        if(definitions.count > 0 && definitions[0].examples.isEmpty){
-                            TextField("Custom Definiton", text: $customDefinition).onSubmit {
-                                definitions.append(definitionEntry(definition: customDefinition,isSelected: true,examples: []))
-                                customDefinition = ""
-                            }
-                            
-                        }
-                        else{
-                            TextField("Custom Example",text: $customExample).onSubmit {
-                                
-                                if let firstchr = customExample.first {
-                                    if let i = Int(String(firstchr)){
-                                        if(i >= 0 && i < definitions.count ){
-                                            definitions[i].examples.append(exampleEntry(example: String(customExample.dropFirst()), isSelected: true))
-                                    }
-                                }
-                                }
+                        TextField("Custom Definiton", text: $customDefinition).onSubmit {
+                            definitions.append(definitionEntry(definition: customDefinition,isSelected: true,examples: []))
+                            customDefinition = ""
+                        }.font(.title2)
+                        
+                        ForEach($definitions) { $definition in
+                            Toggle(definition.definition, isOn: $definition.isSelected).font(.title2)
+                            if ($definition.examples.count > 0){
+                                Toggle(definition.examples[0].example, isOn: $definition.examples[0].isSelected)
                             }
                         }
                         
+                        
+                    }
+                    Button("submit", action: submitDefenitions).font(.title2)
+                }
+                            
+                if (whatToShow == "examples"){
+                    List{
+                        TextField("Custom Example",text: $customExample).onSubmit {
+                            
+                            if let firstchr = customExample.first {
+                                if let i = Int(String(firstchr)){
+                                    if(i >= 0 && i < definitions.count ){
+                                        definitions[i].examples.append(exampleEntry(example: String(customExample.dropFirst()), isSelected: true))
+                                    }
+                                }
+                            }
+                        }.font(.title2)
+                        
+                        
                         ForEach($definitions){ $definition in
-                            
-                            
-                            
-                            Toggle(definition.definition, isOn: $definition.isSelected)
+                            Toggle(definition.definition, isOn: $definition.isSelected).font(.title2)
                             ForEach($definition.examples){ $example in
-                                Toggle(example.example,isOn : $example.isSelected)
+                                Toggle(example.example,isOn : $example.isSelected).font(.title2)
                             }.offset(x:50)
                         }
                         
                     }
-                    HStack{
-                        Spacer()
-                        if (definitions.count > 0 && definitions[0].examples.isEmpty){
-                            Button("submit", action: submitDefenitions)
-                        }
-                        else{
-                            Button("sumbit example",action: submitExamples)
-                        }
-                        Spacer()
-                        
+                    Button(action: submitExamples){
+                        Text("sumbit").font(.title2)
                     }
-                    
                 }
-                
-                
-            }.padding(20).frame(maxWidth: 500,minHeight: 500, maxHeight: 800,)
+            }.padding(20).frame(maxWidth: 800,minHeight: 500, maxHeight: 800,)
         }
-        
     }
+        
+    
 
 
 #Preview {
