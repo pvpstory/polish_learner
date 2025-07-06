@@ -68,9 +68,9 @@ struct MainView: View {
     @Query  var flashcards: [Flashcard]
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
+    @State private var sumbittedWord = ""
     func addSamples() async{
-        let myAI = AI()
-        await myAI.give_meaning(prompt: "write me most frequent and useful definitions and exampples for those definitions of polish word (obcy). Return me a well structure JSON object with definitions and exa,ples. The definitions and examples must be in polish ")
+        
         let example = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: "Jabłko",
@@ -84,35 +84,68 @@ struct MainView: View {
         context.insert(example)
         
     }
-    func submittedWord() async{
+    func submitWord() async{
         let myAI = AI()
-        let output = await myAI.give_meaning(prompt: "prompt")
-        //modify the JSON
+        var analysisResult: AnalysisResult
+        do{
+            analysisResult = try await myAI.give_meaning(word: sumbittedWord)
+            for analys in analysisResult.analysis{
+                var new_definition = (definitionEntry(definition: analys.definition, isSelected: false))
+                for example in analys.examples{
+                    new_definition.examples.append(exampleEntry(example: example.polish,isSelected: false))
+                }
+                definitions.append(new_definition)
+            }
+        }catch let error as MeaningError{
+            switch error{
+            case .apiRequestFailed(let underlyingError):
+                print("API request error: \(underlyingError)")
+            case .emptyOrInvalinResponse:
+                print("Invalid API response")
+            case .jsonDecodingFailed(let underlyingError, let json):
+                print("Json decoding failed, \(underlyingError), \(json)")
+            }
+        } catch {
+            print("An unexpected error occurred: \(error)")
+        }
+        print(definitions)
+        whatToShow = "definitions"
         
     }
     func submitDefenitions(){
         print(definitions)
-        for (i,definition) in definitions.enumerated(){
-            if definition.isSelected == false{
-                definitions.remove(at: i)
-            }
+        definitions.removeAll { definition in
+            return definition.isSelected == false
         }
         whatToShow = "examples"
     }
     func submitExamples(){
+        for i in definitions.indices{
+            definitions[i].examples.removeAll{ example in
+                return example.isSelected == false
+            }
+            
+        }
+        var backside = ""
+        var definitions_c = ""
+        var examples: [String] = []
+        for definition in definitions{
+            definitions_c += definition.definition + "\n"
+            backside += definition.definition + "\n"
+        }
+        
+        for definition in definitions {
+            for example in definition.examples{
+                examples.append(example.example)
+                backside += example.example + "\n"
+            }
+        }
         let new_flashcard = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
-            frontside: "Jabłko",
-            backside:  """
-                APPLE   
-                "Lubię jeść czerwone jabłka. (I like to eat red apples.)",
-                "Szarlotka jest zrobiona z jabłek. (Apple pie is made from apples.)"
-                """,
-            definition: "aple",
-            examples: [
-                "Lubię jeść czerwone jabłka. (I like to eat red apples.)",
-                "Szarlotka jest zrobiona z jabłek. (Apple pie is made from apples.)"
-            ]
+            frontside: sumbittedWord,
+            backside:  backside,
+            definition: definitions_c,
+            examples: examples,
         )
         print("sumbit")
         context.insert(new_flashcard)
@@ -124,12 +157,12 @@ struct MainView: View {
         }
         
         definitions = []
-        text = ""
+        sumbittedWord = ""
         print(flashcards)
+        whatToShow = "start"
         
     }
     
-    @State private var text = ""
     @State private var customDefinition = ""
     @State private var customExample: String = ""
     @State private var whatToShow: String = "start"
@@ -144,10 +177,9 @@ struct MainView: View {
                     Text("add")
                 }
                 if (whatToShow == "start"){
-                    TextField("Enter",text: $text).onSubmit {
+                    TextField("Enter",text: $sumbittedWord).onSubmit {
                         Task {
-                        await submittedWord()
-                        whatToShow = "definitions"
+                        await submitWord()
                     }
                     }
                 }
