@@ -17,6 +17,8 @@ struct MultiChoiceWord: View {
     let frontside: String
     let onAnswer: (Bool) -> Void
     var allOptionsInput: [String]
+    let backside_blured: String
+    @State var backsideShow: String = ""
     @State var allOptions: [String] = []
     @State var selectedAnswer: String?
     
@@ -26,15 +28,21 @@ struct MultiChoiceWord: View {
     ]
     var body: some View{
         VStack{
-            halfFlashCard(text: backside).offset(y: -50)
+            halfFlashCard(text: backsideShow).offset(y: -50)
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in
                 buttonAnswer(text: option)}
             }
         }.task {
             allOptions = allOptionsInput.shuffled()
+            
+            backsideShow = backside_blured
+            print("update1 " + backsideShow )
         }
         .onChange(of: allOptionsInput){
+            backsideShow = backside_blured
+            print("update2 " + backsideShow)
+            
             allOptions = allOptionsInput.shuffled()
             selectedAnswer = nil
         }
@@ -42,7 +50,7 @@ struct MultiChoiceWord: View {
     func halfFlashCard(text: String) -> some View {
         ZStack{
             RoundedRectangle(cornerRadius: 30).fill(.white)
-            Text(backside).font(.headline).foregroundStyle(.black)
+            Text(text).font(.headline).foregroundStyle(.black)
         }.frame(width: 600, height: 600)
     }
     func buttonAnswer(text: String) ->  some View {
@@ -50,6 +58,10 @@ struct MultiChoiceWord: View {
             if selectedAnswer == nil{
                 selectedAnswer = text
             }
+            backsideShow = backside
+            print("update3 " + backsideShow)
+            print("BACKSIDE:::: " + backside)
+            print("BACKSIDE_BLURED:::: " + backside_blured)
             onAnswer(selectedAnswer == frontside)
             
         }){

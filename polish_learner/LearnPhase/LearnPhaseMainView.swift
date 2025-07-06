@@ -13,6 +13,7 @@ struct FlashcardCoppy{
     var frontside: String
     var backside: String
     var stage: String
+    var backside_blured: String
 }
 
 struct LearnPhaseMainView: View {
@@ -22,7 +23,7 @@ struct LearnPhaseMainView: View {
     @State var flashcardsCoppy: [Flashcard] = []
     @State var currentIndex: Int = 0
     @State var canClickNext: Bool = false
-    @State var currentFlashCard: FlashcardCoppy = FlashcardCoppy(frontside: "", backside: "", stage: "")
+    @State var currentFlashCard: FlashcardCoppy = FlashcardCoppy(frontside: "", backside: "", stage: "", backside_blured: "")
     @State var whatToShow: String = "noCards"
     var body: some View {
         VStack{
@@ -51,10 +52,10 @@ struct LearnPhaseMainView: View {
                 }
                 switch currentFlashCard.stage {
                 case "new":
-                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",currentFlashCard.frontside])
+                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",currentFlashCard.frontside], backside_blured: currentFlashCard.backside_blured)
                 case "learning":
                     TypeTheWord(backside: currentFlashCard.backside, frontside:
-                                    currentFlashCard.frontside, onAnswer: onAnswer, TypedWord: "")
+                                    currentFlashCard.frontside, onAnswer: onAnswer, backside_blured: currentFlashCard.backside_blured)
                 case "reviewed":
                     Text("123123")
                 default:
@@ -86,7 +87,7 @@ struct LearnPhaseMainView: View {
         else{
             flashcardsCoppy = Array(learnPhaseFlashCards)
             currentIndex = 0
-            currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage)
+            currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage, backside_blured: flashcardsCoppy[currentIndex].backside_blured)
             whatToShow = "cards"
         }
     }
@@ -95,7 +96,7 @@ struct LearnPhaseMainView: View {
         if currentIndex < flashcardsCoppy.count-1{
             currentIndex+=1
             canClickNext = false
-            currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage)
+            currentFlashCard = FlashcardCoppy(frontside: flashcardsCoppy[currentIndex].frontside, backside: flashcardsCoppy[currentIndex].backside, stage: flashcardsCoppy[currentIndex].stage, backside_blured: flashcardsCoppy[currentIndex].backside_blured)
         }
         else if currentIndex == flashcardsCoppy.count-1 {
             canClickNext = false

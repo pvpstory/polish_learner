@@ -16,7 +16,9 @@ struct TypeTheWord: View {
     let backside: String
     let frontside: String
     let onAnswer: (Bool) -> Void
-    @State var TypedWord: String
+    let backside_blured: String
+    @State var backsideShow: String = ""
+    @State var TypedWord: String = ""
     @State var showResult: Bool = false
     @State var isCorrect: Bool = false
     
@@ -24,7 +26,7 @@ struct TypeTheWord: View {
     
     var body: some View{
         VStack{
-            halfFlashCard(text: backside)
+            halfFlashCard(text: backsideShow)
             
             TextField("Guees the word", text: $TypedWord).onSubmit {
                 onSubmit()
@@ -46,8 +48,11 @@ struct TypeTheWord: View {
                 }
             }.frame(height: 30).padding(.top, -120)
 
+        }.task{
+            backsideShow = backside_blured
         }
         .onChange(of: backside){
+            backsideShow = backside_blured
             showResult = false
             TypedWord = ""
             isCorrect = false
@@ -57,10 +62,11 @@ struct TypeTheWord: View {
     func halfFlashCard(text: String) -> some View {
         ZStack{
             RoundedRectangle(cornerRadius: 30).fill(.white)
-            Text(backside).font(.headline).foregroundStyle(.black)
+            Text(text).font(.headline).foregroundStyle(.black)
         }.frame(width: 600, height: 600).padding(50)
     }
     func onSubmit(){
+        backsideShow = backside
         showResult = true
         isCorrect = TypedWord.lowercased() == frontside.lowercased( )
         onAnswer(isCorrect)
