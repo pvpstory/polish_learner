@@ -19,6 +19,7 @@ class Flashcard {
     @Attribute(.unique) var id: UUID
      var frontside: String
      var backside: String
+     var backside_blured: String
      var definition: String
      var examples: [String] = []
      var createdAt: Date
@@ -28,7 +29,7 @@ class Flashcard {
      var stage: String
     
     
-    init(id: Int, frontside: String, backside: String, definition: String, examples: [String] = []){
+    init(id: Int, frontside: String, backside: String, definition: String, examples: [String] = [],backside_blured: String){
         self.id =   UUID()
         self.frontside = frontside
         self.backside = backside
@@ -37,5 +38,6 @@ class Flashcard {
         self.easeFactor = 2.5
         self.createdAt = Date.now
         self.stage = "new"
+        self.backside_blured = backside_blured
     }
 }

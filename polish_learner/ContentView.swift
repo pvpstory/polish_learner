@@ -11,6 +11,7 @@ struct exampleEntry: Identifiable {
     let id = UUID()
     var example: String
     var isSelected: Bool = false
+    var example_blured: String
 }
 
 struct definitionEntry: Identifiable {
@@ -70,19 +71,6 @@ struct MainView: View {
     @State var definitions = [definitionEntry]()
     @State private var sumbittedWord = ""
     func addSamples() async{
-        
-        let example = Flashcard(
-            id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
-            frontside: "Jabłko",
-            backside: "Apple",
-            definition: "A round fruit with firm, white flesh and a green or red skin.",
-            examples: [
-                "Lubię jeść czerwone jabłka. (I like to eat red apples.)",
-                "Szarlotka jest zrobiona z jabłek. (Apple pie is made from apples.)"
-            ]
-        )
-        context.insert(example)
-        
     }
     func submitWord() async{
         let myAI = AI()
@@ -92,7 +80,7 @@ struct MainView: View {
             for analys in analysisResult.analysis{
                 var new_definition = (definitionEntry(definition: analys.definition, isSelected: false))
                 for example in analys.examples{
-                    new_definition.examples.append(exampleEntry(example: example.polish,isSelected: false))
+                    new_definition.examples.append(exampleEntry(example: example.polish,isSelected: false,example_blured: example.polish_blured))
                 }
                 definitions.append(new_definition)
             }
@@ -129,24 +117,32 @@ struct MainView: View {
         var backside = ""
         var definitions_c = ""
         var examples: [String] = []
+        var backside_blured = ""
         for definition in definitions{
             definitions_c += definition.definition + "\n"
             backside += definition.definition + "\n"
         }
+        backside_blured = backside
         
         for definition in definitions {
             for example in definition.examples{
                 examples.append(example.example)
                 backside += example.example + "\n"
+                backside_blured += example.example_blured + "\n"
             }
+            
         }
+        
         let new_flashcard = Flashcard(
             id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: sumbittedWord,
             backside:  backside,
             definition: definitions_c,
             examples: examples,
+            backside_blured: backside_blured,
+            
         )
+        print(new_flashcard.backside_blured)
         print("sumbit")
         context.insert(new_flashcard)
         do {
@@ -209,7 +205,8 @@ struct MainView: View {
                             if let firstchr = customExample.first {
                                 if let i = Int(String(firstchr)){
                                     if(i >= 0 && i < definitions.count ){
-                                        definitions[i].examples.append(exampleEntry(example: String(customExample.dropFirst()), isSelected: true))
+                                        definitions[i].examples.append(exampleEntry(example: String(customExample.dropFirst()), isSelected: true, example_blured: "fix the example_blured addition"))
+                                        //fix
                                     }
                                 }
                             }

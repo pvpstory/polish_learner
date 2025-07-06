@@ -79,6 +79,4 @@ struct FlashcardView: View {
     }
 }
 
-#Preview {
-    FlashcardView(flashcard: Flashcard(id: 123, frontside: "12312321", backside: "123123123", definition: "123123123"))
-}
+

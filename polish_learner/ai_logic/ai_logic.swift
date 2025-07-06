@@ -25,6 +25,7 @@ struct WordAnalysis: Codable {
 struct Example: Codable {
     let polish: String
     let type: ExampleType
+    let polish_blured: String
 }
 
 enum ExampleType: String, Codable {
@@ -113,6 +114,7 @@ class AI{
         - Each example object within the "examples" array must contain:
           1. A key "polish" with a Polish example sentence as a string.
           2. A key "type" which categorizes the example. Two examples should have the type "standard", and one must have the type "b2_advanced".
+          3. A key "polish_blured" which is the same value as "polish" but instead of the \(word) (whatever gramatical form) there are three ______. It's done so we can show the learner an example and he needs to guess the word
 
         Example Content Instructions:
         - The definitions should be distinct and cover different common meanings of the word.

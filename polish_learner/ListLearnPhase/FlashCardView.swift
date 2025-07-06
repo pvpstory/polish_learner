@@ -22,7 +22,7 @@ struct FlashCardView: View {
                     .degrees(rotation),
                     axis: (x: 0.0, y: 1.0, z: 0.0)
                 )
-            CardSide(text: flashcard.backside)
+            CardSide(text: flashcard.backside_blured + "\n" + flashcard.backside)
                 .opacity(isFlipped ? 1 : 0)
                 .rotation3DEffect(
                     .degrees(rotation + 180),
