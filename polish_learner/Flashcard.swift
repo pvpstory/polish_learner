@@ -29,8 +29,8 @@ class Flashcard {
      var stage: String
     
     
-    init(id: Int, frontside: String, backside: String, definition: String, examples: [String] = [],backside_blured: String){
-        self.id =   UUID()
+    init(frontside: String, backside: String, definition: String, examples: [String] = [],backside_blured: String){
+        self.id = UUID()
         self.frontside = frontside
         self.backside = backside
         self.definition = definition

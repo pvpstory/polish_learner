@@ -118,23 +118,28 @@ struct MainView: View {
         var definitions_c = ""
         var examples: [String] = []
         var backside_blured = ""
+        
+        var i = 1
         for definition in definitions{
-            definitions_c += definition.definition + "\n"
-            backside += definition.definition + "\n"
+            definitions_c += "\(i): " + definition.definition + "\n"
+            backside += "\(i): " + definition.definition + "\n"
+            i+=1
         }
+        backside += "Przykłady:" + "\n"
         backside_blured = backside
         
+        i = 1
         for definition in definitions {
             for example in definition.examples{
                 examples.append(example.example)
-                backside += example.example + "\n"
-                backside_blured += example.example_blured + "\n"
+                backside += "  \(i): " + example.example + "\n"
+                backside_blured += "  \(i): " + example.example_blured + "\n"
+                i+=1
             }
             
-        }
+        }   
         
         let new_flashcard = Flashcard(
-            id: 1, // This 'Int' id is for the initializer, the actual UUID is generated inside
             frontside: sumbittedWord,
             backside:  backside,
             definition: definitions_c,
