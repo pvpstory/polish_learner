@@ -53,6 +53,11 @@
 			path = ai_logic;
 			sourceTree = "<group>";
 		};
+		748907A72E1C2E6300AB4D9C /* ReviewPhase */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ReviewPhase;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +97,7 @@
 		749249492DDB8DAF00FF66EB /* polish_learner */ = {
 			isa = PBXGroup;
 			children = (
+				748907A72E1C2E6300AB4D9C /* ReviewPhase */,
 				740FA9532E1988D100EE1C13 /* ai_logic */,
 				7407EA342E1484F20088FA03 /* ListFlashCards */,
 				7407EA312E146A690088FA03 /* LearnPhase */,
@@ -127,6 +133,7 @@
 				7407EA312E146A690088FA03 /* LearnPhase */,
 				7407EA342E1484F20088FA03 /* ListFlashCards */,
 				740FA9532E1988D100EE1C13 /* ai_logic */,
+				748907A72E1C2E6300AB4D9C /* ReviewPhase */,
 			);
 			name = polish_learner;
 			packageProductDependencies = (

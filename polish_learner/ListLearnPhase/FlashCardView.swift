@@ -52,7 +52,7 @@ struct CardSide: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20).fill(Color.white)
             Text(text).font(.title3).foregroundStyle(.black)
-        }.frame(width: 600, height: 600)
+        }.frame(width: 500, height: 500)
 
     }
 }

@@ -32,6 +32,7 @@ enum Screen: Hashable {
     case second
     case third
     case fourth
+    case fifth
 }
 struct ContentView: View {
     let firstPrompt = "12312"
@@ -44,6 +45,7 @@ struct ContentView: View {
                 Label("All cards", systemImage: "2.circle").tag(Screen.second)
                 Label("Learn Phase Flashcards", systemImage: "3.circle").tag(Screen.third)
                 Label("Learn", systemImage: "4.circle").tag(Screen.fourth)
+                Label("Review", systemImage: "5.circle").tag(Screen.fifth)
             }
             .navigationTitle("Language learner")
             .navigationSplitViewColumnWidth(220)
@@ -57,6 +59,8 @@ struct ContentView: View {
                 LearnPhaseAllMainView()
             case .fourth:
                 LearnPhaseMainView()
+            case .fifth:
+                ReviewPhaseMainView()
             case .none:
                 Text("Select a view")
             }

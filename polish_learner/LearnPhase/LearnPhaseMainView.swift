@@ -27,8 +27,6 @@ struct LearnPhaseMainView: View {
     @State var whatToShow: String = "noCards"
     var body: some View {
         VStack{
-            
-            
             if whatToShow == "noCards"{
                 Text("Good Boy")
             }
