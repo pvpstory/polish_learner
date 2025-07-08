@@ -117,7 +117,7 @@ struct LearnPhaseMainView: View {
                 flashcardsCoppy[currentIndex].stage = "learning"
             }
             else if currentFlashCard.stage == "learning"{
-                flashcardsCoppy[currentIndex].stage = "reviewed"
+                flashcardsCoppy[currentIndex].stage = "review"
             }
             
         }

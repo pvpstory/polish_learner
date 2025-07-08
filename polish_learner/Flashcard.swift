@@ -11,7 +11,7 @@ import SwiftData
 enum Stage: String {
     case new = "new"
     case learning = "learning"
-    case reviewed =  "reviewed"
+    case reviewed =  "review"
 }
 
 @Model
