@@ -20,16 +20,19 @@ class Flashcard {
      var frontside: String
      var backside: String
      var backside_blured: String
-     var definition: String
+     var definition: [String] = []
      var examples: [String] = []
      var createdAt: Date
      var nextReview: Date?
      var lastReview: Date?
      var easeFactor: Double
      var stage: String
+     var successfullReviews: Int = 2
+     var successfullReviewsInARow: Int = 1
+     
     
     
-    init(frontside: String, backside: String, definition: String, examples: [String] = [],backside_blured: String){
+    init(frontside: String, backside: String, definition: [String], examples: [String] = [],backside_blured: String){
         self.id = UUID()
         self.frontside = frontside
         self.backside = backside

@@ -22,6 +22,8 @@ struct ReviewPhaseMainView: View {
     @State var canClickNext: Bool = false
     @State var whatToShow: String = "noCards"
     @State var currentIndex: Int  = 0
+    @State var canShowSelfEvaluation = false
+    @State var evaluationGrade: Int = -1
     var body: some View {
         VStack{
             if whatToShow == "noCards"{
@@ -53,6 +55,19 @@ struct ReviewPhaseMainView: View {
                 default:
                     Text("WTF????")
                 }
+                if canShowSelfEvaluation{
+                    HStack(spacing: 10){
+                        
+                        EvaluationButton(grade: 1, text: "grade 1")
+                        EvaluationButton(grade: 2, text: "grade 2")
+                        EvaluationButton(grade: 3, text: "grade 3")
+                        EvaluationButton(grade: 4, text: "grade 4")
+                        EvaluationButton(grade: 5, text: "grade 5")
+                        EvaluationButton(grade: 6, text: "grade 6")
+                        
+                        
+                    }
+                }
                 
             }
         }.task {
@@ -75,14 +90,50 @@ struct ReviewPhaseMainView: View {
         else{
             currentIndex += 1
             canClickNext = false
+            canShowSelfEvaluation = false
+            evaluationGrade = -1
         }
         
         
         
     }
     func onAnwer(correct: Bool) {
+        // do we need correct or do we only use the self evaluation???
+        canShowSelfEvaluation = true
         
-        canClickNext = true
+    }
+    func changeFlashCardNextReview(){
+        //change flashcard based on the grade
+        let successesInARow = flashcardsCoppy[currentIndex].successfullReviewsInARow
+        let successes = flashcardsCoppy[currentIndex].successfullReviews
+        //let lastTimeInterval = flashcardsCoppy[currentIndex].nextReview - flashcardsCoppy[currentIndex].lastReview
+        let nextReview: Int
+        if evaluationGrade >= 3{
+            if successesInARow >= 0{
+                nextReview = (evaluationGrade-1) * 2
+            }
+            else if successesInARow == 2{
+                nextReview = evaluationGrade * 2
+            }
+            else{
+                //nextReview = (lastTineInterval * EaseFactor)
+                //make grade matter here?
+            }
+            flashcardsCoppy[currentIndex].successfullReviewsInARow += 1
+            
+        }
+        else{
+            if successesInARow == 1{
+                nextReview = 1
+            }
+            else if successesInARow == 2{
+                nextReview = evaluationGrade
+            }
+            else if successesInARow >= 3{
+                nextReview = (evaluationGrade) * 2
+            }
+            flashcardsCoppy[currentIndex].successfullReviewsInARow = 0
+        }
         
     }
     func getOptionWords() -> [String] {
@@ -106,6 +157,16 @@ struct ReviewPhaseMainView: View {
         frontSides.append(curFrontside)
         frontSides = frontSides.shuffled()
         return frontSides
+    }
+    func EvaluationButton(grade: Int,text: String) -> some View {
+        Button(action:{
+            evaluationGrade = grade
+            canClickNext = true
+            
+        }){
+            Text(text)
+        }.disabled(evaluationGrade != -1)
+        
     }
 }
 

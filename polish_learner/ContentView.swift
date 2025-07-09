@@ -119,13 +119,13 @@ struct MainView: View {
             
         }
         var backside = ""
-        var definitions_c = ""
+        var definitions_c: [String] = []
         var examples: [String] = []
         var backside_blured = ""
         
         var i = 1
         for definition in definitions{
-            definitions_c += "\(i): " + definition.definition + "\n"
+            definitions_c.append(definition.definition)
             backside += "\(i): " + definition.definition + "\n"
             i+=1
         }
