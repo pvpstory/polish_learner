@@ -12,7 +12,7 @@ import SwiftData
 // switch , case based on the random
 struct ReviewPhaseMainView: View {
     @Query(filter: #Predicate<Flashcard> { flashcard in
-        flashcard.stage == "review"    }) var flashcards: [Flashcard] // change
+        flashcard.nextReview >= Date.now && flashcard.stage == "review"}) var flashcards: [Flashcard]
     @Query var randomFlashcards: [Flashcard] // is it inefficient?
     @State var testFormat: Int = Int.random(in: 0..<2)
     @State var flashcardsCoppy: [Flashcard] = []
@@ -130,10 +130,11 @@ struct ReviewPhaseMainView: View {
                 nextReview = evaluationGrade
             }
             else if successesInARow >= 3{
-                nextReview = (evaluationGrade) * 2
+                nextReview = evaluationGrade * 2
             }
             flashcardsCoppy[currentIndex].successfullReviewsInARow = 0
         }
+        flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(Double(nextReview * 86000))
         
     }
     func getOptionWords() -> [String] {
@@ -157,6 +158,29 @@ struct ReviewPhaseMainView: View {
         frontSides.append(curFrontside)
         frontSides = frontSides.shuffled()
         return frontSides
+    }
+    func getOptionDefinitions() -> [String] {
+        let shuffledFlashcards = randomFlashcards.shuffled()
+        var definitions: [String] = []
+        var randomIndex: Int = 0
+        for i in 0..<3{
+            if shuffledFlashcards.count >= i+1 && shuffledFlashcards[i].frontside != curFrontside{
+                randomIndex = Int.random(in: 0..<shuffledFlashcards[i].definition.count)
+                definitions.append(shuffledFlashcards[i].definition[randomIndex])
+            }
+            else if shuffledFlashcards[i].frontside == curFrontside && shuffledFlashcards.count >= 5{
+                randomIndex = Int.random(in: 0..<shuffledFlashcards[4].definition.count)
+                definitions.append(shuffledFlashcards[4].definition[randomIndex])
+                
+            }
+            else{
+                definitions.append("not enough") // take other indexes instead
+            }
+            
+        }
+        randomIndex = Int.random(in: 0..<flashcardsCoppy[currentIndex].definition.count)
+        definitions.append(flashcardsCoppy[currentIndex].definition[randomIndex])
+        return definitions
     }
     func EvaluationButton(grade: Int,text: String) -> some View {
         Button(action:{

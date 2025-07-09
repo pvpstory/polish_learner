@@ -23,7 +23,7 @@ class Flashcard {
      var definition: [String] = []
      var examples: [String] = []
      var createdAt: Date
-     var nextReview: Date?
+     var nextReview: Date = Date.now
      var lastReview: Date?
      var easeFactor: Double
      var stage: String
