@@ -60,7 +60,7 @@ struct ContentView: View {
             case .fourth:
                 LearnPhaseMainView()
             case .fifth:
-                ReviewPhaseMainView()
+                ReviewPhaseMainView(curDate: Date.now)
             case .none:
                 Text("Select a view")
             }

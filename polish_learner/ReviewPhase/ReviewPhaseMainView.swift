@@ -11,8 +11,8 @@ import SwiftData
 //when it's clicked or during task we randomly choose the regime the next card is gonna be
 // switch , case based on the random
 struct ReviewPhaseMainView: View {
-    @Query(filter: #Predicate<Flashcard> { flashcard in
-        flashcard.nextReview >= Date.now && flashcard.stage == "review"}) var flashcards: [Flashcard]
+    @Query var flashcards: [Flashcard] //filter at innit
+    
     @Query var randomFlashcards: [Flashcard] // is it inefficient?
     @State var testFormat: Int = Int.random(in: 0..<2)
     @State var flashcardsCoppy: [Flashcard] = []
@@ -31,21 +31,19 @@ struct ReviewPhaseMainView: View {
             }
             if whatToShow == "cards"{
                 Text("\(currentIndex+1) / \(flashcardsCoppy.count)")
-                ZStack {
-                    Button(action: {
+                ZStack{
+                    Button(action : {
                         
-                    }){
-                        Text("Next")
-                    }.opacity(0)
-                    
+                    }) {
+                        Image(systemName: "arrow.right")
+                    }.position(x: 1400, y: 380).opacity(0)
                     if canClickNext{
                         Button(action: {
                             incrementIndex()
-                        }){
-                            Text("Next")
-                        }
+                        }) {
+                            Image(systemName: "arrow.right")
+                        }.position(x: 1400, y: 380)
                     }
-                    
                 }
                 switch testFormat{
                 case 0:
@@ -55,20 +53,30 @@ struct ReviewPhaseMainView: View {
                 default:
                     Text("WTF????")
                 }
-                if canShowSelfEvaluation{
-                    HStack(spacing: 10){
-                        
-                        EvaluationButton(grade: 1, text: "grade 1")
-                        EvaluationButton(grade: 2, text: "grade 2")
-                        EvaluationButton(grade: 3, text: "grade 3")
-                        EvaluationButton(grade: 4, text: "grade 4")
-                        EvaluationButton(grade: 5, text: "grade 5")
-                        EvaluationButton(grade: 6, text: "grade 6")
-                        
-                        
-                    }
-                }
                 
+                ZStack{
+                    EvaluationButton(grade: 1, text: "grade 1").opacity(0)
+                    EvaluationButton(grade: 2, text: "grade 2").opacity(0)
+                    EvaluationButton(grade: 3, text: "grade 3").opacity(0)
+                    EvaluationButton(grade: 4, text: "grade 4").opacity(0)
+                    EvaluationButton(grade: 5, text: "grade 5").opacity(0)
+                    EvaluationButton(grade: 6, text: "grade 6").opacity(0)
+                    
+                    if canShowSelfEvaluation{
+                        HStack(spacing: 10){
+                            
+                            EvaluationButton(grade: 1, text: "grade 1")
+                            EvaluationButton(grade: 2, text: "grade 2")
+                            EvaluationButton(grade: 3, text: "grade 3")
+                            EvaluationButton(grade: 4, text: "grade 4")
+                            EvaluationButton(grade: 5, text: "grade 5")
+                            EvaluationButton(grade: 6, text: "grade 6")
+                            
+                            
+                        }
+                    }
+                    
+                }
             }
         }.task {
             //new session
@@ -107,7 +115,7 @@ struct ReviewPhaseMainView: View {
         let successesInARow = flashcardsCoppy[currentIndex].successfullReviewsInARow
         let successes = flashcardsCoppy[currentIndex].successfullReviews
         //let lastTimeInterval = flashcardsCoppy[currentIndex].nextReview - flashcardsCoppy[currentIndex].lastReview
-        let nextReview: Int
+        var nextReview = 0
         if evaluationGrade >= 3{
             if successesInARow >= 0{
                 nextReview = (evaluationGrade-1) * 2
@@ -134,6 +142,7 @@ struct ReviewPhaseMainView: View {
             }
             flashcardsCoppy[currentIndex].successfullReviewsInARow = 0
         }
+        print(Double(nextReview * 86000))
         flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(Double(nextReview * 86000))
         
     }
@@ -145,14 +154,15 @@ struct ReviewPhaseMainView: View {
             if shuffledFlashcards.count >= i+1 && shuffledFlashcards[i].frontside != curFrontside{
                 frontSides.append(shuffledFlashcards[i].frontside)
             }
-            else if shuffledFlashcards[i].frontside == curFrontside && shuffledFlashcards.count >= 5{
+            else if shuffledFlashcards.count >= 5 && shuffledFlashcards[i].frontside == curFrontside{
                 frontSides.append(shuffledFlashcards[4].frontside)
             }
             else{
-                frontSides.append("supeRandom")
+                frontSides.append("supeRandom\(i)" )
                 
             }
         }
+        print(frontSides)
         
 
         frontSides.append(curFrontside)
@@ -168,13 +178,13 @@ struct ReviewPhaseMainView: View {
                 randomIndex = Int.random(in: 0..<shuffledFlashcards[i].definition.count)
                 definitions.append(shuffledFlashcards[i].definition[randomIndex])
             }
-            else if shuffledFlashcards[i].frontside == curFrontside && shuffledFlashcards.count >= 5{
+            else if shuffledFlashcards.count >= 5 && shuffledFlashcards[i].frontside == curFrontside{
                 randomIndex = Int.random(in: 0..<shuffledFlashcards[4].definition.count)
                 definitions.append(shuffledFlashcards[4].definition[randomIndex])
                 
             }
             else{
-                definitions.append("not enough") // take other indexes instead
+                definitions.append("not enough]\(i)") // take other indexes instead
             }
             
         }
@@ -186,11 +196,24 @@ struct ReviewPhaseMainView: View {
         Button(action:{
             evaluationGrade = grade
             canClickNext = true
+            changeFlashCardNextReview()
             
         }){
             Text(text)
         }.disabled(evaluationGrade != -1)
         
     }
+    init(curDate: Date){
+        let predicate: Predicate<Flashcard>?
+        
+        
+        
+        predicate = #Predicate<Flashcard>{ flashcard in
+            flashcard.nextReview <= curDate && flashcard.stage == "review"}
+        
+        _flashcards = Query(filter: predicate)
+    }
+    
+    
 }
 

@@ -118,7 +118,8 @@ struct LearnPhaseMainView: View {
             }
             else if currentFlashCard.stage == "learning"{
                 flashcardsCoppy[currentIndex].stage = "review"
-                flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(86400)
+                //flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(86400)
+                flashcardsCoppy[currentIndex].nextReview = Date.now
                 flashcardsCoppy[currentIndex].lastReview = Date.now
             }
             

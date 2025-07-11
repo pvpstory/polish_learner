@@ -39,7 +39,7 @@ struct MultiChoiceWord: View {
             backsideShow = backside_blured
             print("update1 " + backsideShow )
         }
-        .onChange(of: allOptionsInput){
+        .onChange(of: frontside){
             backsideShow = backside_blured
             print("update2 " + backsideShow)
             

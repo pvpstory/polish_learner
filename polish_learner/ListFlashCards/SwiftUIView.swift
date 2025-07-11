@@ -22,9 +22,9 @@ struct FlashcardView: View {
                         .textFieldStyle(.roundedBorder)
                         .focused($isNameFieldFocused)
                 } else {
-                    Text(flashcard.frontside)
+                    Text("\(flashcard.frontside) + \(flashcard.stage) + \(flashcard.nextReview)")
                         .font(.title3)
-                        .frame(maxWidth: 300, alignment: .leading)
+                        .frame(maxWidth: 500, alignment: .leading)
                 }
             }
             .frame(maxWidth: 300)

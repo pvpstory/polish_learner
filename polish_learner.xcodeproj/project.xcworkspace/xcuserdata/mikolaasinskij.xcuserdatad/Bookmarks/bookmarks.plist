@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>top-level-items</key>
+	<array>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>location-parameters</key>
+				<dict>
+					<key>EndingColumnNumber</key>
+					<string>101</string>
+					<key>EndingLineNumber</key>
+					<string>14</string>
+					<key>StartingColumnNumber</key>
+					<string>101</string>
+					<key>StartingLineNumber</key>
+					<string>14</string>
+					<key>Timestamp</key>
+					<string>773928731.552991</string>
+				</dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>base</key>
+					<string>workspace</string>
+					<key>payload</key>
+					<dict>
+						<key>relative-path</key>
+						<string>polish_learner/ReviewPhase/ReviewPhaseMainView.swift</string>
+					</dict>
+				</dict>
+				<key>type</key>
+				<string>DVTDocumentLocation</string>
+			</dict>
+			<key>title</key>
+			<string>Error: Cannot convert value of type 'PredicateExpressions.Conjunction&lt;PredicateExpressions.Comparison&lt;PredicateExpressions.KeyPath&lt;PredicateExpressions.Variable&lt;Flashcard&gt;, Date&gt;, PredicateExpressions.KeyPath&lt;PredicateExpressions.Value&lt;Date.Type&gt;, Date&gt;&gt;, PredicateExpressions.Equal&lt;PredicateExpressions.KeyPath&lt;PredicateExpressions.Variable&lt;Flashcard&gt;, String&gt;, PredicateExpressions.Value&lt;String&gt;&gt;&gt;' to closure result type 'any StandardPredicateExpression&lt;Bool&gt;'</string>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
+	</array>
+</dict>
+</plist>
