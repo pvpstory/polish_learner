@@ -14,7 +14,7 @@ struct ReviewPhaseMainView: View {
     @Query var flashcards: [Flashcard] //filter at innit
     
     @Query var randomFlashcards: [Flashcard] // is it inefficient?
-    @State var testFormat: Int = Int.random(in: 0..<2)
+    @State var testFormat: Int = Int.random(in: 0..<3)
     @State var flashcardsCoppy: [Flashcard] = []
     @State var curBackside: String = ""
     @State var curFrontside: String = ""
@@ -47,9 +47,11 @@ struct ReviewPhaseMainView: View {
                 }
                 switch testFormat{
                 case 0:
-                    MultiChoiceWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionWords(), backside_blured: curBluredBackside)
+                    MultiChoiceWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: curBluredBackside)
                 case 1:
                     TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside)
+                case 2:
+                    MultiChoiceDefinition(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionDefinitions(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]))
                 default:
                     Text("WTF????")
                 }
@@ -96,6 +98,7 @@ struct ReviewPhaseMainView: View {
             whatToShow = "noCards"
         }
         else{
+            testFormat = Int.random(in: 0..<3)
             currentIndex += 1
             canClickNext = false
             canShowSelfEvaluation = false
@@ -124,14 +127,20 @@ struct ReviewPhaseMainView: View {
                 nextReview = evaluationGrade * 2
             }
             else{
-                //nextReview = (lastTineInterval * EaseFactor)
-                //make grade matter here?
+                let lastReview = flashcardsCoppy[currentIndex].lastReview
+                let components = Calendar.current.dateComponents([.day], from: lastReview, to: Date.now)
+                
+                if let lastTimeInterval = components.day{
+                    
+                    nextReview = (lastTimeInterval * Int(flashcardsCoppy[currentIndex].easeFactor))
+                }
             }
             flashcardsCoppy[currentIndex].successfullReviewsInARow += 1
+            flashcardsCoppy[currentIndex].successfullReviews += 1
             
         }
         else{
-            if successesInARow == 1{
+            if successesInARow >= 0{
                 nextReview = 1
             }
             else if successesInARow == 2{
@@ -143,54 +152,17 @@ struct ReviewPhaseMainView: View {
             flashcardsCoppy[currentIndex].successfullReviewsInARow = 0
         }
         print(Double(nextReview * 86000))
+        let quality = Double(evaluationGrade - 1)
+        let innerFactor = 0.08 + (5.0 - quality) * 0.02
+        let mainTerm = 5.0 - quality * innerFactor
+        let newEaseFactor = 0.1 - mainTerm
+
+        flashcardsCoppy[currentIndex].easeFactor += newEaseFactor
+                                     
+                                     
+        flashcardsCoppy[currentIndex].lastReview = Date.now
         flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(Double(nextReview * 86000))
         
-    }
-    func getOptionWords() -> [String] {
-        //make this func available to the LearnPhaseMainView
-        let shuffledFlashcards = randomFlashcards.shuffled() //is it inefficient?
-        var frontSides: [String] = []
-        for i in 0..<3{
-            if shuffledFlashcards.count >= i+1 && shuffledFlashcards[i].frontside != curFrontside{
-                frontSides.append(shuffledFlashcards[i].frontside)
-            }
-            else if shuffledFlashcards.count >= 5 && shuffledFlashcards[i].frontside == curFrontside{
-                frontSides.append(shuffledFlashcards[4].frontside)
-            }
-            else{
-                frontSides.append("supeRandom\(i)" )
-                
-            }
-        }
-        print(frontSides)
-        
-
-        frontSides.append(curFrontside)
-        frontSides = frontSides.shuffled()
-        return frontSides
-    }
-    func getOptionDefinitions() -> [String] {
-        let shuffledFlashcards = randomFlashcards.shuffled()
-        var definitions: [String] = []
-        var randomIndex: Int = 0
-        for i in 0..<3{
-            if shuffledFlashcards.count >= i+1 && shuffledFlashcards[i].frontside != curFrontside{
-                randomIndex = Int.random(in: 0..<shuffledFlashcards[i].definition.count)
-                definitions.append(shuffledFlashcards[i].definition[randomIndex])
-            }
-            else if shuffledFlashcards.count >= 5 && shuffledFlashcards[i].frontside == curFrontside{
-                randomIndex = Int.random(in: 0..<shuffledFlashcards[4].definition.count)
-                definitions.append(shuffledFlashcards[4].definition[randomIndex])
-                
-            }
-            else{
-                definitions.append("not enough]\(i)") // take other indexes instead
-            }
-            
-        }
-        randomIndex = Int.random(in: 0..<flashcardsCoppy[currentIndex].definition.count)
-        definitions.append(flashcardsCoppy[currentIndex].definition[randomIndex])
-        return definitions
     }
     func EvaluationButton(grade: Int,text: String) -> some View {
         Button(action:{

@@ -24,7 +24,7 @@ class Flashcard {
      var examples: [String] = []
      var createdAt: Date
      var nextReview: Date
-     var lastReview: Date?
+     var lastReview: Date
      var easeFactor: Double
      var stage: String
      var successfullReviews: Int = 2
@@ -35,6 +35,7 @@ class Flashcard {
     init(frontside: String, backside: String, definition: [String], examples: [String] = [],backside_blured: String){
         self.id = UUID()
         self.nextReview = Date.now
+        self.lastReview = Date.now
         self.frontside = frontside
         self.backside = backside
         self.definition = definition

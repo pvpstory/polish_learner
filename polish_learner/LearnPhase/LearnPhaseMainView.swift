@@ -20,6 +20,7 @@ struct LearnPhaseMainView: View {
     @Query(filter: #Predicate<Flashcard>{ flashcard in
         flashcard.stage == "new" || flashcard.stage == "learning"
     }) var learnPhaseFlashCards: [Flashcard]
+    @Query var randomFlashcards: [Flashcard]
     @State var flashcardsCoppy: [Flashcard] = []
     @State var currentIndex: Int = 0
     @State var canClickNext: Bool = false
@@ -50,7 +51,7 @@ struct LearnPhaseMainView: View {
                 }
                 switch currentFlashCard.stage {
                 case "new":
-                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: ["tuka","buka","assasin",currentFlashCard.frontside], backside_blured: currentFlashCard.backside_blured)
+                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: flashcardsCoppy[currentIndex].frontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: currentFlashCard.backside_blured)
                 case "learning":
                     TypeTheWord(backside: currentFlashCard.backside, frontside:
                                     currentFlashCard.frontside, onAnswer: onAnswer, backside_blured: currentFlashCard.backside_blured)

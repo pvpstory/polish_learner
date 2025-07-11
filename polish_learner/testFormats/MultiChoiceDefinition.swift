@@ -14,11 +14,11 @@ import SwiftUI
 
 struct MultiChoiceDefinition: View {
     let backside: String
-    let definition: String
     let frontside: String
     let onAnswer: (Bool) -> Void
     var allOptionsInput: [String]
-    @State var backsideShow: String = ""
+    @State var definition: String = ""
+    @State var cardView: String = ""
     @State var allOptions: [String] = []
     @State var selectedAnswer: String?
     
@@ -28,16 +28,20 @@ struct MultiChoiceDefinition: View {
     ]
     var body: some View{
         VStack{
-            halfFlashCard(text: frontside).offset(y: -50)
+            halfFlashCard(text: cardView).offset(y: -50)
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in
                 buttonAnswer(text: option)}
             }
         }.task {
             allOptions = allOptionsInput.shuffled()
+            cardView = frontside
+            definition = allOptionsInput[3]
+
                     }
-        .onChange(of: allOptionsInput){
-            
+        .onChange(of: frontside){
+            definition = allOptionsInput[3]
+            cardView = frontside
             allOptions = allOptionsInput.shuffled()
             selectedAnswer = nil
         }
@@ -53,6 +57,7 @@ struct MultiChoiceDefinition: View {
             if selectedAnswer == nil{
                 selectedAnswer = text
             }
+            cardView = frontside + "\n" + backside
             
             onAnswer(selectedAnswer == definition)
             
