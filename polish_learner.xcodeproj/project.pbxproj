@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74012DA32E26B52E00F328EB /* AddingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74012DA22E26B52400F328EB /* AddingMainView.swift */; };
 		740FA9352E19843900EE1C13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 740FA9342E19843900EE1C13 /* GoogleService-Info.plist */; };
 		740FA9382E19851400EE1C13 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9372E19851400EE1C13 /* FirebaseAI */; };
 		740FA93A2E19851400EE1C13 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9392E19851400EE1C13 /* FirebaseAnalytics */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		74012DA22E26B52400F328EB /* AddingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingMainView.swift; sourceTree = "<group>"; };
 		740FA9342E19843900EE1C13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7492492C2DD9F9BD00FF66EB /* polish_learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polish_learner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		749249442DDB8DAF00FF66EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		749249492DDB8DAF00FF66EB /* polish_learner */ = {
 			isa = PBXGroup;
 			children = (
+				74012DA22E26B52400F328EB /* AddingMainView.swift */,
 				7419E8AB2E1D4B5900734A0F /* testFormats */,
 				748907A72E1C2E6300AB4D9C /* ReviewPhase */,
 				740FA9532E1988D100EE1C13 /* ai_logic */,
@@ -214,6 +217,7 @@
 				7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */,
 				7492494B2DDB8DAF00FF66EB /* Flashcard.swift in Sources */,
 				7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */,
+				74012DA32E26B52E00F328EB /* AddingMainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
