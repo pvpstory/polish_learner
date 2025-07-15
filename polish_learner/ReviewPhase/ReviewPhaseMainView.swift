@@ -116,7 +116,7 @@ struct ReviewPhaseMainView: View {
     func changeFlashCardNextReview(){
         //change flashcard based on the grade
         let successesInARow = flashcardsCoppy[currentIndex].successfullReviewsInARow
-        let successes = flashcardsCoppy[currentIndex].successfullReviews
+        //let successes = flashcardsCoppy[currentIndex].successfullReviews
         //let lastTimeInterval = flashcardsCoppy[currentIndex].nextReview - flashcardsCoppy[currentIndex].lastReview
         var nextReview = 0
         if evaluationGrade >= 3{

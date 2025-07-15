@@ -64,6 +64,26 @@ struct ContentView: View {
             case .none:
                 Text("Select a view")
             }
+        }.toolbar{
+            ToolbarItemGroup(placement: .keyboard){
+                Button("Go to first View"){
+                    selection = .first
+                }.keyboardShortcut("1", modifiers: [])
+                
+                Button("Go to second View"){
+                    selection = .second
+                }.keyboardShortcut("2", modifiers: [])
+                Button("Go to third View"){
+                    selection = .third
+                }.keyboardShortcut("3", modifiers: [])
+                Button("Go to the fourth View"){
+                    selection = .fourth
+                }.keyboardShortcut("4", modifiers: [])
+                
+                Button("Go to the fifth View"){
+                    selection = .fifth
+                }.keyboardShortcut("5", modifiers: [])
+            }
         }
         
     }

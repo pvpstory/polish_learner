@@ -16,11 +16,13 @@
       "size" : "32x32"
     },
     {
+      "filename" : "64x64.jpg",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
+      "filename" : "128_128.jpg",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
@@ -31,6 +33,7 @@
       "size" : "128x128"
     },
     {
+      "filename" : "256_256.jpg",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
@@ -46,6 +49,7 @@
       "size" : "512x512"
     },
     {
+      "filename" : "polish_Icon.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
