@@ -3,6 +3,7 @@
 
 import SwiftUI
 import SwiftData
+import Foundation
 struct AddingMainView: View {
     @Query  var flashcards: [Flashcard]
     @Environment(\.modelContext) private var context
@@ -44,6 +45,9 @@ struct AddingMainView: View {
         whatToShow = "examples"
     }
     func submitExamples(){
+        definitions.removeAll { definition in
+            return definition.isSelected == false
+        }
         for i in definitions.indices{
             definitions[i].examples.removeAll{ example in
                 return example.isSelected == false
@@ -107,12 +111,12 @@ struct AddingMainView: View {
             VStack(spacing: 20){
                 if (whatToShow == "start"){
                     VStack(alignment: .leading, spacing: 8) {
-                            Text("Learn a New Word")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                            Text("Type the polish word you want to learn")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
+                        Text("Learn a New Word")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        Text("Type the polish word you want to learn")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
                         }
 
                     TextField("Enter the word", text: $sumbittedWord)
@@ -123,29 +127,60 @@ struct AddingMainView: View {
                                 await submitWord()
                             }
                         }
-                    
-                    
                 }
+                
                 if (whatToShow == "definitions"){
+                
+                    
+                    Text("Choose the definitions you want to study or write your own")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
                     List{
                         TextField("Custom Definiton", text: $customDefinition).onSubmit {
                             definitions.append(definitionEntry(definition: customDefinition,isSelected: true,examples: []))
                             customDefinition = ""
-                        }.font(.title2)
+                        }
+                        .font(.title2)
+                        .padding(.bottom, 10)
+                        .listRowSeparator(.hidden)
+                        
                         
                         ForEach($definitions) { $definition in
-                            Toggle(definition.definition, isOn: $definition.isSelected).font(.title2)
-                            if ($definition.examples.count > 0){
-                                Toggle(definition.examples[0].example, isOn: $definition.examples[0].isSelected)
+                            Toggle(definition.definition, isOn: $definition.isSelected)
+                                .font(.title2)
+                                .listRowSeparator(.hidden)
+                            if (!definition.examples.isEmpty){
+                                Text(definition.examples[0].example)
+                                    .font(.title2)
+                                    .offset(x: 50)
+                                    .listRowSeparator(.hidden)
                             }
                         }
-                        
+                            
+                            
                         
                     }
-                    Button("submit", action: submitDefenitions).font(.title2)
-                }
+                    Button(action: submitDefenitions) {
+                        Text("Submit")
+                            .foregroundColor(.black)
+                            .font(.system(size: 14, weight: .medium))
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.white.opacity(0.6))
+                            )
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    
+            }
                             
                 if (whatToShow == "examples"){
+                    Text("Choose the examples you want to include or write your own")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                     List{
                         TextField("Custom Example",text: $customExample).onSubmit {
                             
@@ -157,22 +192,38 @@ struct AddingMainView: View {
                                     }
                                 }
                             }
-                        }.font(.title2)
+                        }
+                        .font(.title2)
+                        .padding(.bottom, 10)
+                        .listRowSeparator(.hidden)
                         
                         
                         ForEach($definitions){ $definition in
-                            Toggle(definition.definition, isOn: $definition.isSelected).font(.title2)
+                            Toggle(definition.definition, isOn: $definition.isSelected)
+                                .font(.title2)
+                                .listRowSeparator(.hidden)
                             ForEach($definition.examples){ $example in
-                                Toggle(example.example,isOn : $example.isSelected).font(.title2)
+                                Toggle(example.example,isOn : $example.isSelected)
+                                    .font(.title2)
+                                    .listRowSeparator(.hidden)
                             }.offset(x:50)
                         }
                         
                     }
-                    Button(action: submitExamples){
-                        Text("sumbit").font(.title2)
+                    Button(action: submitDefenitions) {
+                        Text("Submit")
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .medium))
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.black.opacity(0.6))
+                            )
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
-            }.padding(20).frame(maxWidth: 800,minHeight: 500, maxHeight: 800,)
+            }.padding(20).frame(maxWidth: 1000,minHeight: 500, maxHeight: 800,)
         }
     }
 

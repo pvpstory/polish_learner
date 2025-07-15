@@ -105,22 +105,22 @@ class AI{
         For the word \(word), provide definitions and examples formatted exclusively as a single JSON object.
 
         The JSON object must follow this exact structure:
-        - A root object containing a single key named "analysis".
-        - The value of "analysis" should be an array of objects, where each object represents a distinct definition of the word.
-        - Each definition object must contain:
-          1.  A key "definition" with the Polish definition as a string.
-          2.  A key "part_of_speech" with the Polish part of speech (e.g., "rzeczownik", "czasownik") as a string.
-          3.  A key "examples" with an array of exactly three example objects.
-        - Each example object within the "examples" array must contain:
-          1. A key "polish" with a Polish example sentence as a string.
-          2. A key "type" which categorizes the example. Two examples should have the type "standard", and one must have the type "b2_advanced".
-          3. A key "polish_blured" which is the same value as "polish" but instead of the \(word) (whatever gramatical form) there are three ______. It's done so we can show the learner an example and he needs to guess the word
 
+        A root object containing a single key named "analysis".
+        The value of "analysis" should be an array of objects, where each object represents a distinct definition of the word.
+        Each definition object must contain:
+        A key "definition" with the Polish definition as a string.
+        A key "part_of_speech" with the Polish part of speech (e.g., "rzeczownik", "czasownik") as a string.
+        A key "examples" with an array of exactly three example objects.
+        Each example object within the "examples" array must contain:
+        A key "polish" with a complete and correct Polish example sentence as a string, which includes \(word) in its appropriate grammatical form.
+        A key "polish_blured" with a string identical to the "polish" sentence, but with the specific grammatical form of \(word) replaced by "___".
+        A key "type" which categorizes the example. Two examples should have the type "standard", and one must have the type "b2_advanced".
         Example Content Instructions:
-        - The definitions should be distinct and cover different common meanings of the word.
-        - The two "standard" examples should be clear and common use cases.
-        - The one "b2_advanced" example is crucial: it must be a more complex, well-thought-out sentence. This sentence should showcase nuance, context, or a slightly more sophisticated grammatical structure that is particularly helpful for a B2 learner aiming to improve their fluency and natural expression. It should not be a simple, short sentence.
 
+        The definitions should be distinct and cover different common meanings of the word.
+        The two "standard" examples should be clear and common use cases.
+        The one "b2_advanced" example is crucial: it must be a more complex, well-thought-out sentence. This sentence should showcase nuance, context, or a slightly more sophisticated grammatical structure that is particularly helpful for a B2 learner aiming to improve their fluency and natural expression. It should not be a simple, short sentence.
         Do not include any commentary, apologies, or introductory text outside of the final JSON output. Your entire response must be the JSON object itself.
         """
     }
