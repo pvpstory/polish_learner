@@ -4,14 +4,20 @@
 import FirebaseAI
 import Foundation
 
-struct AnalysisResult: Codable {
+
+struct SentenceAnalyticsFeedback: Codable {
+    let correct: Bool
+    let coreCorection: String
+    let deeperDive: String
+}
+
+struct WordMeaning: Codable {
     let analysis: [WordAnalysis]
 }
 
-
 struct WordAnalysis: Codable {
     let definition: String
-    let partOfSpeech: String // Using camelCase for Swift convention
+    let partOfSpeech: String
     let examples: [Example]
 
     
@@ -47,7 +53,7 @@ class AI{
     let ai = FirebaseAI.firebaseAI(backend: .googleAI())
     
     
-    func give_meaning(word: String) async throws -> AnalysisResult{
+    func give_meaning(word: String) async throws -> WordMeaning{
         let model = ai.generativeModel(modelName: "gemini-2.0-flash")
         let decoder = JSONDecoder()
         
@@ -72,12 +78,46 @@ class AI{
         
         do{
             let jsonData = cleanJsonString.data(using: .utf8)!
-            let result = try decoder.decode(AnalysisResult.self, from: jsonData)
+            let result = try decoder.decode(WordMeaning.self, from: jsonData)
             return result
         }catch{
             throw MeaningError.jsonDecodingFailed(underlyingError: error, json: cleanJsonString)
         }
     }
+    
+    func analyze_sentence(sentence: String) async throws -> SentenceAnalyticsFeedback{
+        let model = ai.generativeModel(modelName: "gemini-2.5-flash")
+        let decoder = JSONDecoder()
+
+        let response: GenerateContentResponse
+        
+        do{
+            response = try await model.generateContent(sentenceAnalysisPrompt(sentence: sentence))
+        }catch{
+            throw MeaningError.apiRequestFailed(underlyingError: error)
+        }
+        
+        guard let unwrappedText = response.text, !unwrappedText.isEmpty else {
+            throw MeaningError.emptyOrInvalinResponse
+        }
+        
+        guard let cleanJsonString = extractJsonString(from: unwrappedText) else {
+                print("--- FAILED TO EXTRACT JSON FROM RAW RESPONSE ---")
+                print("Original AI response:\n\(unwrappedText)")
+                print("---------------------------------------------")
+                throw MeaningError.emptyOrInvalinResponse
+            }
+        
+        do{
+            let jsonData = cleanJsonString.data(using: .utf8)!
+            let result = try decoder.decode(SentenceAnalyticsFeedback.self, from: jsonData)
+            return result
+        }catch{
+            throw MeaningError.jsonDecodingFailed(underlyingError: error, json: cleanJsonString)
+        }
+    }
+    
+    
     func extractJsonString(from text: String) -> String? {
         // Find the first '{' or '[' which marks the beginning of the JSON
         guard let firstBracket = text.firstIndex(of: "{") ?? text.firstIndex(of: "[") else {
@@ -98,6 +138,11 @@ class AI{
         return String(text[firstBracket...lastBracket])
     }
     
+    func sentenceAnalysisPrompt(sentence: String) -> String{
+        return """
+                123123
+        """
+    }
     func submitWordPrompt(word: String) -> String{
         return """
         You are an expert Polish linguist and language tutor AI. Your task is to generate a detailed analysis of a given Polish word for a language learner with a strong B2 level of proficiency.

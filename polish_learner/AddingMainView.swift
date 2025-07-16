@@ -13,7 +13,7 @@ struct AddingMainView: View {
     func submitWord() async{
         isLoading = true
         let myAI = AI()
-        var analysisResult: AnalysisResult
+        var analysisResult: WordMeaning
         do{
             analysisResult = try await myAI.give_meaning(word: sumbittedWord)
             for analys in analysisResult.analysis{
