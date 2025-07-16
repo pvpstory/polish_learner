@@ -49,11 +49,12 @@ struct ReviewPhaseMainView: View {
                 }
                 switch testFormat{
                 case 0:
-                    MultiChoiceWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: curBluredBackside)
-                case 1:
+                    TypeTheSentence(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, definitions: flashcardsCoppy[currentIndex].definition)
+                case 10:
                     TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside)
-                case 2:
+                case 11:
                     MultiChoiceDefinition(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionDefinitions(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]))
+        
                 default:
                     Text("WTF????")
                 }
@@ -80,7 +81,7 @@ struct ReviewPhaseMainView: View {
                         }
                     }
                     
-                }
+                }.padding(.top,-40)
             }
         }.task {
             //new session

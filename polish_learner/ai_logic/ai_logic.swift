@@ -7,7 +7,7 @@ import Foundation
 
 struct SentenceAnalyticsFeedback: Codable {
     let correct: Bool
-    let coreCorection: String
+    let coreCorrection: String
     let deeperDive: String
 }
 
@@ -85,14 +85,14 @@ class AI{
         }
     }
     
-    func analyze_sentence(sentence: String) async throws -> SentenceAnalyticsFeedback{
+    func analyze_sentence(sentence: String, word: String) async throws -> SentenceAnalyticsFeedback{
         let model = ai.generativeModel(modelName: "gemini-2.5-flash")
         let decoder = JSONDecoder()
 
         let response: GenerateContentResponse
         
         do{
-            response = try await model.generateContent(sentenceAnalysisPrompt(sentence: sentence))
+            response = try await model.generateContent(sentenceAnalysisPrompt(sentence: sentence, word: word))
         }catch{
             throw MeaningError.apiRequestFailed(underlyingError: error)
         }
@@ -107,7 +107,8 @@ class AI{
                 print("---------------------------------------------")
                 throw MeaningError.emptyOrInvalinResponse
             }
-        
+        print(sentence,word)
+        print(cleanJsonString)
         do{
             let jsonData = cleanJsonString.data(using: .utf8)!
             let result = try decoder.decode(SentenceAnalyticsFeedback.self, from: jsonData)
@@ -115,6 +116,7 @@ class AI{
         }catch{
             throw MeaningError.jsonDecodingFailed(underlyingError: error, json: cleanJsonString)
         }
+
     }
     
     
@@ -138,9 +140,77 @@ class AI{
         return String(text[firstBracket...lastBracket])
     }
     
-    func sentenceAnalysisPrompt(sentence: String) -> String{
+    func sentenceAnalysisPrompt(sentence: String, word: String) -> String{
         return """
-                123123
+                The AI Prompt
+                You are an expert AI language tutor. Your function is to analyze a sentence written by a user and provide structured feedback in a JSON format. The user is trying to use a specific target word based on its definition.
+
+                A critical rule is that your entire response must be in the targetLanguage provided. All strings within the final JSON object, including explanations and examples, must be in that language.
+
+                You will receive this input:
+
+                targetLanguage: The language the user is learning.
+                targetWord: The vocabulary word to use.
+                definition: The definition of the target word.
+                userSentence: The sentence the user has written.
+                Your response MUST be a single, valid JSON object and nothing else. Do not include any text before or after the JSON. The JSON must have this exact structure:
+
+                {
+                  "correct": boolean,
+                  "coreCorrection": "string",
+                  "deeperDive": "string"
+                }
+        
+                Field Instructions:
+                correct (Boolean):
+                true: If the sentence is grammatically correct and the targetWord is used appropriately.
+                false: If there are any grammatical errors or the targetWord is misused.
+                coreCorrection (String):
+                This is the primary feedback. It must be a short, encouraging message in the targetLanguage.
+                If correct is true, provide positive reinforcement (e.g., "Excellent work!").
+                If correct is false, identify the single most important error and suggest how to fix it. Keep it simple.
+                deeperDive (String):
+                This field provides more detailed information in the targetLanguage. Do not use any Markdown formatting.
+                If the sentence is incorrect: Briefly explain the rule for the coreCorrection. Then, provide one correct alternative sentence as an example.
+                If the sentence is correct: Provide useful collocations (popular words that are frequently used with the targetWord). For each collocation, provide a very short example phrase showing how they are used together.
+                Example 1: Incorrect Sentence
+                Input:
+
+                targetLanguage: "English"
+                targetWord: "elucidate"
+                definition: "to make something clear; explain"
+                userSentence: "The teacher elucidate the hard concept."
+                Your Expected JSON Output:
+
+                {
+                  "correct": false,
+                  "coreCorrection": "Good attempt! For a singular subject like 'The teacher', the verb needs an '-s'. The correct form is 'elucidates'.",
+                  "deeperDive": "This is a subject-verb agreement rule. In the present tense, the verb must match its subject. Another way to say it could be: \"The teacher's lecture helped to elucidate the concept.\""
+                }
+                
+                Example 2: Correct Sentence
+                Input:
+
+                targetLanguage: "English"
+                targetWord: "ephemeral"
+                definition: "lasting for a very short time"
+                userSentence: "The artist created an ephemeral installation that only lasted for one day."
+                Your Expected JSON Output:
+
+                Generated json
+                {
+                  "correct": true,
+                  "coreCorrection": "Perfect! That's an excellent use of the word 'ephemeral'.",
+                  "deeperDive": "Popular combinations include: 'ephemeral beauty' (e.g., the ephemeral beauty of a sunrise), and 'ephemeral nature' (e.g., the ephemeral nature of childhood)."
+                }
+                
+                Your Task
+                Now, analyze the following user sentence. Remember, your entire JSON output must be in the specified targetLanguage.
+
+                targetLanguage: "Polish"
+                targetWord: \(word)
+                definition: "use most common definitions"
+                userSentence: \(sentence)
         """
     }
     func submitWordPrompt(word: String) -> String{
