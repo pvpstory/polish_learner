@@ -28,6 +28,7 @@ struct MultiChoiceWord: View {
     ]
     var body: some View{
         VStack{
+            Text("Choose the correct word").font(.largeTitle).fontWeight(.bold).offset(y: -50)
             halfFlashCard(text: backsideShow).offset(y: -50)
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in

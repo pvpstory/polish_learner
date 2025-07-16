@@ -9,7 +9,9 @@ struct AddingMainView: View {
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
     @State private var sumbittedWord = ""
+    @State private var isLoading: Bool = false
     func submitWord() async{
+        isLoading = true
         let myAI = AI()
         var analysisResult: AnalysisResult
         do{
@@ -35,6 +37,7 @@ struct AddingMainView: View {
         }
         print(definitions)
         whatToShow = "definitions"
+        isLoading = false
         
     }
     func submitDefenitions(){
@@ -110,6 +113,7 @@ struct AddingMainView: View {
     var body: some View {
             VStack(spacing: 20){
                 if (whatToShow == "start"){
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Learn a New Word")
                             .font(.largeTitle)
@@ -127,6 +131,9 @@ struct AddingMainView: View {
                                 await submitWord()
                             }
                         }
+                    if isLoading{
+                        ProgressView().progressViewStyle(CircularProgressViewStyle())
+                    }
                 }
                 
                 if (whatToShow == "definitions"){
@@ -210,7 +217,7 @@ struct AddingMainView: View {
                         }
                         
                     }
-                    Button(action: submitDefenitions) {
+                    Button(action: submitExamples) {
                         Text("Submit")
                             .foregroundColor(.white)
                             .font(.system(size: 14, weight: .medium))

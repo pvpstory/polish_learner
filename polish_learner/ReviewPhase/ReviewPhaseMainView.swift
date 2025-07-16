@@ -30,7 +30,9 @@ struct ReviewPhaseMainView: View {
                 Text("No need to Review Today Bro")
             }
             if whatToShow == "cards"{
-                Text("\(currentIndex+1) / \(flashcardsCoppy.count)")
+                Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
+                    .font(.title)
+                    .position(x: 50, y: 30)
                 ZStack{
                     Button(action : {
                         

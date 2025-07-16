@@ -53,7 +53,7 @@ class AI{
         
         let response: GenerateContentResponse
         do{
-            response = try await model.generateContent(createFirstPromppt(word: word))
+            response = try await model.generateContent(submitWordPrompt(word: word))
         }catch{
             throw MeaningError.apiRequestFailed(underlyingError: error)
         }
@@ -98,7 +98,7 @@ class AI{
         return String(text[firstBracket...lastBracket])
     }
     
-    func createFirstPromppt(word: String) -> String{
+    func submitWordPrompt(word: String) -> String{
         return """
         You are an expert Polish linguist and language tutor AI. Your task is to generate a detailed analysis of a given Polish word for a language learner with a strong B2 level of proficiency.
 

@@ -26,6 +26,8 @@ struct TypeTheWord: View {
     
     var body: some View{
         VStack{
+            Text("Type the correct word").font(.largeTitle).fontWeight(.bold).offset(y: 20)
+
             halfFlashCard(text: backsideShow)
             
             TextField("Guees the word", text: $TypedWord).onSubmit {
