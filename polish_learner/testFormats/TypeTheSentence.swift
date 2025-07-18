@@ -21,17 +21,17 @@ import SwiftUI
 struct TypeTheSentence: View {
     let backside: String
     let frontside: String
-    let onAnswer: (Bool) -> Void
+    let onAnswerGrade: (Int) -> Void
     let definitions: [String]
+    let incrementButtonFunc: () -> Void
+    @State var canShowEvaluation: Bool = false
+    @State var canClickNext: Bool = false
     @State var backsideShow: String = ""
     @State var typedSentence: String = ""
     @State var showResult: Bool = false
     @State var isCorrect: Bool = false
     @State var isLoading: Bool = false
     @State var sentenceFeedback: SentenceAnalyticsFeedback = SentenceAnalyticsFeedback(correct: false, coreCorrection: "", deeperDive: "")
-    
-    
-    
     var body: some View{
         VStack{
             Text("Type the example sentence with the correct word").font(.largeTitle).fontWeight(.bold).offset(y: 20)
@@ -67,6 +67,14 @@ struct TypeTheSentence: View {
                 
                 halfFlashCard(text: backsideShow).padding(.horizontal)
                 Spacer()
+                if canClickNext{
+                    Button(action: {
+                        incrementButtonFunc()
+                    }) {
+                        Image(systemName: "arrow.right")
+                    }.offset(y: 50).padding(10)
+                }
+                
             }.frame(maxWidth: .infinity)
                 
             
@@ -80,7 +88,14 @@ struct TypeTheSentence: View {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(maxWidth: 600, maxHeight: 80)
             .padding(.bottom, 120)
-            
+            ZStack{
+                if canShowEvaluation{
+                    EvaluationButtons(callFunction: onGrade).offset(y: -50)
+                }
+                else{
+                    EvaluationButtons(callFunction: onAnswerGradeEmpty).offset(y: -50).opacity(0)
+                }
+            }
             
             
 
@@ -93,6 +108,8 @@ struct TypeTheSentence: View {
             for definition in definitions {
                 backsideShow += definition + "\n"
             }
+            canClickNext = false
+            canShowEvaluation = false
             showResult = false
             typedSentence = ""
             isCorrect = false
@@ -116,9 +133,16 @@ struct TypeTheSentence: View {
         print(sentenceFeedback.deeperDive)
         backsideShow = backside
         showResult = true
+        canShowEvaluation = true
         isCorrect = typedSentence.lowercased() == frontside.lowercased( )
-        onAnswer(isCorrect)
         isLoading = false
+    }
+    func onGrade(grade: Int){
+        canClickNext = true
+        onAnswerGrade(grade)
+    }
+    func onAnswerGradeEmpty(grade: Int){
+        
     }
         
         
