@@ -36,30 +36,38 @@ struct TypeTheSentence: View {
         VStack{
             Text("Type the example sentence with the correct word").font(.largeTitle).fontWeight(.bold).offset(y: 20)
             
-            
-            VStack{
-                if showResult{
-                    if sentenceFeedback.correct{
-                        Text("Good Job! No errors and correct usage")
-                            .foregroundStyle(.green)
-                            .fixedSize(horizontal: false, vertical: false) // Ensures text wraps
+            HStack{
+                VStack(alignment: .leading, spacing: 10){
+                    if isLoading{
+                        ProgressView().progressViewStyle(CircularProgressViewStyle())
                     }
-                    else{
-                        Text("Unfortunately your sentence isn't entirely correct")
-                            .foregroundStyle(.red)
+                    if showResult{
+                        if sentenceFeedback.correct{
+                            Text("Good Job! No errors and correct usage")
+                                .font(.headline)
+                                .lineLimit(nil)
+                                .foregroundStyle(.green)
+                        }
+                        else{
+                            Text("Unfortunately your sentence isn't entirely correct")
+                                .foregroundStyle(.red)
+                        }
+                        if !sentenceFeedback.correct{
+                            Text(sentenceFeedback.coreCorrection)
+                                .cornerRadius(8)
+                        }
+                        
+                        Text(sentenceFeedback.deeperDive)
+                            .font(.headline)
+                            .lineLimit(nil)
+                        
                     }
-                    if !sentenceFeedback.correct{
-                        Text(sentenceFeedback.coreCorrection)
-                            .fixedSize(horizontal: false, vertical: true) // Ensures text wraps
-                            .cornerRadius(8)
-                    }
-                    
-                    Text(sentenceFeedback.deeperDive)
-                        .fixedSize(horizontal: false, vertical: false) // Ensures text wraps
-                    
-                }
-            }.position(x: 200, y: 100)
-                halfFlashCard(text: backsideShow)
+                }.frame(maxWidth: 340, alignment: .leading).padding(15)
+
+                
+                halfFlashCard(text: backsideShow).padding(.horizontal)
+                Spacer()
+            }.frame(maxWidth: .infinity)
                 
             
             
@@ -74,9 +82,7 @@ struct TypeTheSentence: View {
             .padding(.bottom, 120)
             
             
-            if isLoading{
-                ProgressView().progressViewStyle(CircularProgressViewStyle())
-            }
+            
 
         }.task{
             for definition in definitions {
