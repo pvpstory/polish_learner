@@ -26,3 +26,12 @@ func EvaluationButtons(callFunction: @escaping (Int) -> Void) -> some View{
         EvaluationButton(callFunction: callFunction, grade: 6, text: "Grade 6")
     }
 }
+
+
+func NextButton(callFunction: @escaping () -> Void) -> some View{
+    Button(action: {
+        callFunction()
+    }){
+        Image(systemName: "arrow.right")
+    }
+}

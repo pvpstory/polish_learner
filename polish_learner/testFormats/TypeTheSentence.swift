@@ -68,11 +68,7 @@ struct TypeTheSentence: View {
                 halfFlashCard(text: backsideShow).padding(.horizontal)
                 Spacer()
                 if canClickNext{
-                    Button(action: {
-                        incrementButtonFunc()
-                    }) {
-                        Image(systemName: "arrow.right")
-                    }.offset(y: 50).padding(10)
+                    NextButton(callFunction: incrementButtonFunc).offset(y: 50).padding(10)
                 }
                 
             }.frame(maxWidth: .infinity)
@@ -90,7 +86,7 @@ struct TypeTheSentence: View {
             .padding(.bottom, 120)
             ZStack{
                 if canShowEvaluation{
-                    EvaluationButtons(callFunction: onGrade).offset(y: -50)
+                    EvaluationButtons(callFunction: onGrade).offset(y: -50).disabled(canClickNext)
                 }
                 else{
                     EvaluationButtons(callFunction: onAnswerGradeEmpty).offset(y: -50).opacity(0)

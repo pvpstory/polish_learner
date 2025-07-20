@@ -14,7 +14,7 @@ struct ReviewPhaseMainView: View {
     @Query var flashcards: [Flashcard] //filter at innit
     
     @Query var randomFlashcards: [Flashcard] // is it inefficient?
-    @State var testFormat: Int = Int.random(in: 0..<3)
+    @State var testFormat: Int = Int.random(in: 0..<1)
     @State var flashcardsCoppy: [Flashcard] = []
     @State var curBackside: String = ""
     @State var curFrontside: String = ""
@@ -32,10 +32,10 @@ struct ReviewPhaseMainView: View {
                     .position(x: 50, y: 30)
                 
                 switch testFormat{
-                case 0:
+                case 2:
                     TypeTheSentence(backside: curBackside, frontside: curFrontside, onAnswerGrade: changeFlashCardNextReview, definitions: flashcardsCoppy[currentIndex].definition, incrementButtonFunc: incrementIndex)
-                case 10:
-                    TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside)
+                case 0:
+                    TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside, onNextFlashcard: incrementIndex, onAnswerGrade: changeFlashCardNextReview, ReviewView: true)
                 case 11:
                     MultiChoiceDefinition(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionDefinitions(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]))
         

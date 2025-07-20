@@ -35,30 +35,30 @@ struct LearnPhaseMainView: View {
                 Text("\(currentIndex+1)/\(flashcardsCoppy.count)")
                     .font(.title)
                     .position(x: 50, y: 30)
-                ZStack{
-                    Button(action : {
-                        
-                    }) {
-                        Image(systemName: "arrow.right")
-                    }.position(x: 1400, y: 380).opacity(0)
-                    if canClickNext{
-                        Button(action: {
-                            incrementIndex()
-                        }) {
-                            Image(systemName: "arrow.right")
-                        }.position(x: 1400, y: 380)
-                    }
-                }
+//                ZStack{
+//                    Button(action : {
+//                        
+//                    }) {
+//                        Image(systemName: "arrow.right")
+//                    }.position(x: 1400, y: 380).opacity(0)
+//                    if canClickNext{
+//                        Button(action: {
+//                            incrementIndex()
+//                        }) {
+//                            Image(systemName: "arrow.right")
+//                        }.position(x: 1400, y: 380)
+//                    }
+//                }
                 switch currentFlashCard.stage {
                 case "new":
                     MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: flashcardsCoppy[currentIndex].frontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: currentFlashCard.backside_blured)
                 case "learning":
                     TypeTheWord(backside: currentFlashCard.backside, frontside:
-                                    currentFlashCard.frontside, onAnswer: onAnswer, backside_blured: currentFlashCard.backside_blured)
+                                    currentFlashCard.frontside, onAnswer: onAnswer, backside_blured: currentFlashCard.backside_blured, onNextFlashcard: incrementIndex,onAnswerGrade: nil, ReviewView: false)
                 case "reviewed":
                     Text("123123")
                 default:
-                    Text("def")
+                    Text("def") 
                 }
             }
             else if whatToShow == "finishedPortion"{
