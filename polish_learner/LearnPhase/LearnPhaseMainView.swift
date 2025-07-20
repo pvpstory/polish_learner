@@ -51,7 +51,7 @@ struct LearnPhaseMainView: View {
 //                }
                 switch currentFlashCard.stage {
                 case "new":
-                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: flashcardsCoppy[currentIndex].frontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: currentFlashCard.backside_blured)
+                    MultiChoiceWord(backside: currentFlashCard.backside, frontside: currentFlashCard.frontside, onAnswer: onAnswer, allOptionsInput: getOptionWords(randomFlashcards: randomFlashcards, curFrontside: flashcardsCoppy[currentIndex].frontside, curFlashcard: flashcardsCoppy[currentIndex]), backside_blured: currentFlashCard.backside_blured,onClickNext: incrementIndex)
                 case "learning":
                     TypeTheWord(backside: currentFlashCard.backside, frontside:
                                     currentFlashCard.frontside, onAnswer: onAnswer, backside_blured: currentFlashCard.backside_blured, onNextFlashcard: incrementIndex,onAnswerGrade: nil, ReviewView: false)

@@ -18,9 +18,11 @@ struct MultiChoiceWord: View {
     let onAnswer: (Bool) -> Void
     var allOptionsInput: [String]
     let backside_blured: String
+    let onClickNext: () -> Void
     @State var backsideShow: String = ""
     @State var allOptions: [String] = []
     @State var selectedAnswer: String?
+    @State var canClickNext: Bool = false
     
     private let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
@@ -29,7 +31,20 @@ struct MultiChoiceWord: View {
     var body: some View{
         VStack{
             Text("Choose the correct word").font(.largeTitle).fontWeight(.bold).offset(y: -50)
-            halfFlashCard(text: backsideShow).offset(y: -50)
+            HStack{
+                NextButton(callFunction: {}).opacity(0).offset(y: 20).padding(10)
+                Spacer()
+                halfFlashCard(text: backsideShow).offset(y: -50)
+                Spacer()
+                ZStack{
+                    if canClickNext{
+                        NextButton(callFunction: onClickNext)
+                    }
+                    else{
+                        NextButton(callFunction: {}).opacity(0)
+                    }
+                }.offset(y: 20).padding(10)
+            }
             LazyVGrid(columns: columns, spacing: 15){
                 ForEach(allOptions,id: \.self) { option in
                 buttonAnswer(text: option)}
@@ -46,6 +61,7 @@ struct MultiChoiceWord: View {
             
             allOptions = allOptionsInput.shuffled()
             selectedAnswer = nil
+            canClickNext = false
         }
     }
     func halfFlashCard(text: String) -> some View {
@@ -60,6 +76,7 @@ struct MultiChoiceWord: View {
                 selectedAnswer = text
             }
             backsideShow = backside
+            canClickNext = true
             print("update3 " + backsideShow)
             print("BACKSIDE:::: " + backside)
             print("BACKSIDE_BLURED:::: " + backside_blured)
