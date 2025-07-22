@@ -9,13 +9,14 @@ import SwiftUI
 import SwiftData
 
 struct allFlashcardsView: View {
-    @Query(sort: \Flashcard.frontside) var flashcards: [Flashcard]
     @State var searchText: String = ""
-    
+    @State var detailView: Bool = false
 
     var body: some View {
         NavigationStack{
-            FlashCardListView(searchText: searchText).searchable(text: $searchText)
+            FlashCardListView(searchText: searchText, detailView: detailView).searchable(text: $searchText)
+        }.toolbar{
+            Toggle("Detail View", isOn: $detailView)
         }
     }
 }

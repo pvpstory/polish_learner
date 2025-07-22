@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FlashcardView: View {
     @Bindable var flashcard: Flashcard
+    let detailView: Bool
     @State var isEditing = false
     @FocusState private var isNameFieldFocused: Bool
     @FocusState private var isDetailsFieldFocused: Bool
@@ -16,18 +17,27 @@ struct FlashcardView: View {
     var body: some View {
         HStack(spacing: 25){
             VStack(alignment: .leading) {
+                
                 if isEditing {
                     TextField("Frontside", text: $flashcard.frontside, axis: .vertical)
                         .font(.title3)
                         .textFieldStyle(.roundedBorder)
                         .focused($isNameFieldFocused)
+                        .frame(maxWidth: 300)
                 } else {
-                    Text("\(flashcard.frontside) + \(flashcard.stage) + \(flashcard.nextReview)")
-                        .font(.title3)
-                        .frame(maxWidth: 500, alignment: .leading)
+                    if !detailView {
+                        Text("\(flashcard.frontside)")
+                            .font(.title3)
+                            .frame(maxWidth: 300, alignment: .leading)
+                    }else{
+                        Text("\(flashcard.frontside)")
+                            .font(.title3)
+                            .frame(maxWidth: 150, alignment: .leading)
+                        }
+                    
                 }
             }
-            .frame(maxWidth: 300)
+            
             
             VStack(alignment: .leading) {
             if isEditing {
@@ -49,9 +59,15 @@ struct FlashcardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-               
                 .frame(maxWidth: .infinity)
-            
+            if detailView{
+                VStack(alignment: .leading){
+                    Text("\(flashcard.nextReview)")
+                }.frame(maxWidth: 300).font(.title3)
+                VStack(alignment: .leading){
+                    Text("\(flashcard.successfullReviewsInARow) in a row")
+                }.frame(maxWidth: 300).font(.title3)
+            }
             Button(action: {
                 isEditing.toggle()
                 if isEditing {

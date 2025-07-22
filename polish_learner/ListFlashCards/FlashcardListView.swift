@@ -10,18 +10,20 @@ import SwiftData
 
 struct FlashCardListView: View {
     @Query(sort: \Flashcard.frontside) var flashcards: [Flashcard]
+    var detailView: Bool
     
     var body: some View {
         
             VStack {
                 List {
                     ForEach(flashcards) { flashcard in
-                        FlashcardView(flashcard: flashcard)
+                        FlashcardView(flashcard: flashcard, detailView: detailView)
                     }
                 }
             }
         }
-    init(searchText: String){
+    init(searchText: String, detailView: Bool){
+        self.detailView = detailView
         let predicate: Predicate<Flashcard>?
         
         
