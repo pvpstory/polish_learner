@@ -5,11 +5,26 @@ import SwiftUI
 import SwiftData
 import Foundation
 struct AddingMainView: View {
-    @Query  var flashcards: [Flashcard]
+    @Query var flashcards: [Flashcard]
     @Environment(\.modelContext) private var context
     @State var definitions = [definitionEntry]()
     @State private var sumbittedWord = ""
     @State private var isLoading: Bool = false
+    
+    
+    func getTodayCount() -> Int{
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        let predicate = #Predicate<Flashcard>{ flashcard in
+            flashcard.createdAt >= startOfToday}
+        do{
+            let descriptor = FetchDescriptor<Flashcard>(predicate: predicate)
+            let results = try context.fetch(descriptor)
+            return results.count
+        }catch{
+            print("Error fetching total count: \(error)")
+            return 0
+        }
+    }
     func submitWord() async{
         isLoading = true
         let myAI = AI()
@@ -102,7 +117,6 @@ struct AddingMainView: View {
         
         definitions = []
         sumbittedWord = ""
-        print(flashcards)
         whatToShow = "start"
         
     }
@@ -111,8 +125,26 @@ struct AddingMainView: View {
     @State private var customExample: String = ""
     @State private var whatToShow: String = "start"
     var body: some View {
+        if whatToShow == "start"{
+            VStack{
+                HStack{
+                    Text("Created Today: \(getTodayCount()) flashcards")
+                        .fontWeight(.bold)
+                        .font(.title)
+                        .padding(25)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
+        VStack{
+            HStack{
+                
+            }
+        }
             VStack(spacing: 20){
                 if (whatToShow == "start"){
+                    
                     
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Learn a New Word")
@@ -211,8 +243,12 @@ struct AddingMainView: View {
                                 .listRowSeparator(.hidden)
                             ForEach($definition.examples){ $example in
                                 Toggle(example.example,isOn : $example.isSelected)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .font(.title2)
+                                    .lineLimit(nil)
                                     .listRowSeparator(.hidden)
+                                    .multilineTextAlignment(.leading)
+                                
                             }.offset(x:50)
                         }
                         
@@ -230,6 +266,7 @@ struct AddingMainView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
+                Spacer()
             }.padding(20).frame(maxWidth: 1000,minHeight: 500, maxHeight: 800,)
         }
     }
