@@ -65,8 +65,8 @@ struct FlashcardView: View {
                     Text("\(flashcard.nextReview)")
                 }.frame(maxWidth: 300).font(.title3)
                 VStack(alignment: .leading){
-                    Text("\(flashcard.successfullReviewsInARow) in a row")
-                }.frame(maxWidth: 300).font(.title3)
+                    Text("\(flashcard.successfullReviewsInARow) times in a row")
+                }.frame(maxWidth: 300,alignment: .leading).font(.title3)
             }
             Button(action: {
                 isEditing.toggle()

@@ -56,14 +56,12 @@ struct TypeTheWord: View {
             .frame(maxWidth: 600, maxHeight: 80)
             .padding(.bottom, 120)
             
-            if ReviewView{
-                if showResult{
+            if ReviewView && showResult{
                     EvaluationButtons(callFunction: onGrade).disabled(canClickNext).offset(y: -30)
-                    
-                }
-                else{
-                    EvaluationButtons(callFunction: onAnswerGradeEmpty).opacity(0)
-                }
+        
+            }else{
+                EvaluationButtons(callFunction: onAnswerGradeEmpty).opacity(0).disabled(true)
+
             }
             ZStack{
                 Text("Placeholder")

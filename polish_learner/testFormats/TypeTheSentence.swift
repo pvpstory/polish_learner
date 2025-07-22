@@ -89,7 +89,7 @@ struct TypeTheSentence: View {
                     EvaluationButtons(callFunction: onGrade).offset(y: -50).disabled(canClickNext)
                 }
                 else{
-                    EvaluationButtons(callFunction: onAnswerGradeEmpty).offset(y: -50).opacity(0)
+                    EvaluationButtons(callFunction: onAnswerGradeEmpty).offset(y: -50).opacity(0).disabled(true)
                 }
             }
             
