@@ -24,6 +24,7 @@ struct TypeTheSentence: View {
     let onAnswerGrade: (Int) -> Void
     let definitions: [String]
     let incrementButtonFunc: () -> Void
+    var evaluationButtonsText: [String] = ["grade 1", "grade 2", "grade 3", "grade 4", "grade 5", "grade 6"]
     @State var canShowEvaluation: Bool = false
     @State var canClickNext: Bool = false
     @State var backsideShow: String = ""
@@ -86,10 +87,10 @@ struct TypeTheSentence: View {
             .padding(.bottom, 120)
             ZStack{
                 if canShowEvaluation{
-                    EvaluationButtons(callFunction: onGrade).offset(y: -50).disabled(canClickNext)
+                    EvaluationButtons(callFunction: onGrade, textArray: evaluationButtonsText).offset(y: -50).disabled(canClickNext)
                 }
                 else{
-                    EvaluationButtons(callFunction: onAnswerGradeEmpty).offset(y: -50).opacity(0).disabled(true)
+                    EvaluationButtons(callFunction: onAnswerGradeEmpty, textArray: []).offset(y: -50).opacity(0).disabled(true)
                 }
             }
             

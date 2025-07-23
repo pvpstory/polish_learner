@@ -35,10 +35,10 @@ struct ReviewPhaseMainView: View {
                 case 0:
                     TypeTheSentence(backside: curBackside, frontside: curFrontside, onAnswerGrade: changeFlashCardNextReview, definitions: flashcardsCoppy[currentIndex].definition, incrementButtonFunc: incrementIndex)
                 case 1:
-                    TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside, onNextFlashcard: incrementIndex, onAnswerGrade: changeFlashCardNextReview, ReviewView: true)
+                    TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside, onNextFlashcard: incrementIndex, onAnswerGrade: changeFlashCardNextReview, ReviewView: true, evaluationButtonsText: getALLPossibleChangeDates())
                 case 11:
                     MultiChoiceDefinition(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer, allOptionsInput: getOptionDefinitions(randomFlashcards: randomFlashcards, curFrontside: curFrontside, curFlashcard: flashcardsCoppy[currentIndex]))
-        
+                    
                 default:
                     Text("WTF????")
                 }
@@ -76,11 +76,15 @@ struct ReviewPhaseMainView: View {
     func onAnwer(correct: Bool) {
         // do we need correct or do we only use the self evaluation???
     }
-    func changeFlashCardNextReview(grade: Int){
-        //change flashcard based on the grade
-        let successesInARow = flashcardsCoppy[currentIndex].successfullReviewsInARow
-        //let successes = flashcardsCoppy[currentIndex].successfullReviews
-        //let lastTimeInterval = flashcardsCoppy[currentIndex].nextReview - flashcardsCoppy[currentIndex].lastReview
+    func getALLPossibleChangeDates() -> [String]{
+        var allChangeDates: [String] = []
+        for i in 1...6{
+            var inDays = getPossibleChangeDates(grade: i, successesInARow: flashcardsCoppy[currentIndex].successfullReviewsInARow)
+            allChangeDates.append("\(inDays) days")
+        }
+        return allChangeDates
+    }
+    func getPossibleChangeDates(grade: Int, successesInARow: Int) -> Int {
         var nextReview = 0
         if grade >= 3{
             if successesInARow >= 0{
@@ -94,13 +98,9 @@ struct ReviewPhaseMainView: View {
                 let components = Calendar.current.dateComponents([.day], from: lastReview, to: Date.now)
                 
                 if let lastTimeInterval = components.day{
-                    
                     nextReview = (lastTimeInterval * Int(flashcardsCoppy[currentIndex].easeFactor))
                 }
             }
-            flashcardsCoppy[currentIndex].successfullReviewsInARow += 1
-            flashcardsCoppy[currentIndex].successfullReviews += 1
-            
         }
         else{
             if successesInARow == 0{
@@ -112,9 +112,26 @@ struct ReviewPhaseMainView: View {
             else if successesInARow >= 3{
                 nextReview = grade * 2
             }
+        }
+        return nextReview
+    }
+    func changeFlashCardNextReview(grade: Int){
+        //change flashcard based on the grade
+        let successesInARow = flashcardsCoppy[currentIndex].successfullReviewsInARow
+        //let successes = flashcardsCoppy[currentIndex].successfullReviews
+        //let lastTimeInterval = flashcardsCoppy[currentIndex].nextReview - flashcardsCoppy[currentIndex].lastReview
+        let nextReview = getPossibleChangeDates(grade: grade, successesInARow: successesInARow)
+        if grade >= 3{
+            
+            flashcardsCoppy[currentIndex].successfullReviewsInARow += 1
+            flashcardsCoppy[currentIndex].successfullReviews += 1
+            
+        }
+        else{
             flashcardsCoppy[currentIndex].successfullReviewsInARow = 0
         }
-        print(Double(nextReview * 86000))
+        
+        print(String(nextReview) + " days")
         let quality = Double(grade - 1)
         let innerFactor = 0.08 + (5.0 - quality) * 0.02
         let mainTerm = 5.0 - quality * innerFactor

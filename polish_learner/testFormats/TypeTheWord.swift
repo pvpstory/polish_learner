@@ -20,6 +20,7 @@ struct TypeTheWord: View {
     let onNextFlashcard: () -> Void
     let onAnswerGrade: ((Int) -> Void)?
     let ReviewView: Bool
+    var evaluationButtonsText: [String] = ["grade 1", "grade 2", "grade 3", "grade 4", "grade 5", "grade 6"]
     @State var backsideShow: String = ""
     @State var TypedWord: String = ""
     @State var showResult: Bool = false
@@ -57,10 +58,12 @@ struct TypeTheWord: View {
             .padding(.bottom, 120)
             
             if ReviewView && showResult{
-                    EvaluationButtons(callFunction: onGrade).disabled(canClickNext).offset(y: -30)
+                EvaluationButtons(callFunction: onGrade, textArray: evaluationButtonsText)
+                    .disabled(canClickNext)
+                    .offset(y: -30)
         
             }else{
-                EvaluationButtons(callFunction: onAnswerGradeEmpty).opacity(0).disabled(true)
+                EvaluationButtons(callFunction: onAnswerGradeEmpty, textArray: []).opacity(0).disabled(true)
 
             }
             ZStack{
@@ -112,6 +115,26 @@ struct TypeTheWord: View {
     func onAnswerGradeEmpty(grade: Int){
         
     }
+    
+    init(
+            backside: String,
+            frontside: String,
+            onAnswer: @escaping (Bool) -> Void,
+            backside_blured: String,
+            onNextFlashcard: @escaping () -> Void,
+            onAnswerGrade: ((Int) -> Void)?,
+            ReviewView: Bool,
+            evaluationButtonsText: [String] = ["grade 1", "grade 2", "grade 3", "grade 4", "grade 5", "grade 6"]
+        ) {
+            self.backside = backside
+            self.frontside = frontside
+            self.onAnswer = onAnswer
+            self.backside_blured = backside_blured
+            self.onNextFlashcard = onNextFlashcard
+            self.onAnswerGrade = onAnswerGrade
+            self.ReviewView = ReviewView
+            self.evaluationButtonsText = evaluationButtonsText
+        }
     
     
         
