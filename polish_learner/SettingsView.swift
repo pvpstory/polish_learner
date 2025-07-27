@@ -15,7 +15,7 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 15){
             Toggle("Allow Notifications", isOn: settings.$isNotificationsEnabled)
             Picker("Interval is Days of your regular notification", selection: settings.$notificationIntervalInDays){
-                ForEach(1...8, id: \.self){ day in
+                ForEach(1...5, id: \.self){ day in
                     Text(" every \(day) days")
                 }
             }
@@ -28,6 +28,19 @@ struct SettingsView: View {
             Spacer()
 
         }.frame(maxWidth: .infinity, maxHeight: .infinity).padding(25)
+            .onChange(of: settings.isNotificationsEnabled){
+                changedNotificationSettings()
+            }
+            .onChange(of: settings.notificationIntervalInDays){
+                changedNotificationSettings()
+            }
+            .onChange(of: settings.notificationTime){
+                changedNotificationSettings()
+            }
         
+    }
+    
+    func changedNotificationSettings(){
+        NotificationManager.scheduleRegularNotification(settings: settings)
     }
 }
