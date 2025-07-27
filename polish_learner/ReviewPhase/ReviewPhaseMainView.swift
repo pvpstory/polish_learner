@@ -33,7 +33,7 @@ struct ReviewPhaseMainView: View {
                 
                 switch testFormat{
                 case 0:
-                    TypeTheSentence(backside: curBackside, frontside: curFrontside, onAnswerGrade: changeFlashCardNextReview, definitions: flashcardsCoppy[currentIndex].definition, incrementButtonFunc: incrementIndex)
+                    TypeTheSentence(backside: curBackside, frontside: curFrontside, onAnswerGrade: changeFlashCardNextReview, definitions: flashcardsCoppy[currentIndex].definition, incrementButtonFunc: incrementIndex, evaluationButtonsText: getALLPossibleChangeDates())
                 case 1:
                     TypeTheWord(backside: curBackside, frontside: curFrontside, onAnswer: onAnwer(correct:), backside_blured: curBluredBackside, onNextFlashcard: incrementIndex, onAnswerGrade: changeFlashCardNextReview, ReviewView: true, evaluationButtonsText: getALLPossibleChangeDates())
                 case 11:

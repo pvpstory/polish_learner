@@ -7,13 +7,8 @@
 
 import SwiftUI
 import SwiftData
-import FirebaseCore
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-  func applicationDidFinishLaunching(_ aNotification: Notification) {
-    FirebaseApp.configure()
-  }
-}
+
 
 @main
 struct polish_learnerApp: App {
@@ -22,6 +17,9 @@ struct polish_learnerApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(for: Flashcard.self)
+        }
+        Settings{
+            SettingsView()
         }
     }
      

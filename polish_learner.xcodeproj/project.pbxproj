@@ -15,6 +15,8 @@
 		740FA9502E1986D500EE1C13 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA94F2E1986D500EE1C13 /* FirebaseAnalyticsIdentitySupport */; };
 		740FA9522E1986D500EE1C13 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9512E1986D500EE1C13 /* FirebaseAnalyticsOnDeviceConversion */; };
 		740FA9582E19C18300EE1C13 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9572E19C18300EE1C13 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		741713A22E3625E700FE8607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741713A12E3625E700FE8607 /* AppDelegate.swift */; };
+		741713A82E36312A00FE8607 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741713A72E36312A00FE8607 /* SettingsView.swift */; };
 		7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249452DDB8DAF00FF66EB /* ContentView.swift */; };
 		7492494B2DDB8DAF00FF66EB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249462DDB8DAF00FF66EB /* Flashcard.swift */; };
 		7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */; };
@@ -25,13 +27,15 @@
 /* Begin PBXFileReference section */
 		74012DA22E26B52400F328EB /* AddingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingMainView.swift; sourceTree = "<group>"; };
 		740FA9342E19843900EE1C13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		741713A12E3625E700FE8607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		741713A72E36312A00FE8607 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7492492C2DD9F9BD00FF66EB /* polish_learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polish_learner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		749249442DDB8DAF00FF66EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		749249452DDB8DAF00FF66EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		749249462DDB8DAF00FF66EB /* Flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 		749249472DDB8DAF00FF66EB /* polish_learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = polish_learner.entitlements; sourceTree = "<group>"; };
 		749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = polish_learnerApp.swift; sourceTree = "<group>"; };
-		74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "polish-learner-Info.plist"; sourceTree = SOURCE_ROOT; };
+		74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "polish-learner-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -53,6 +57,11 @@
 		740FA9532E1988D100EE1C13 /* ai_logic */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ai_logic;
+			sourceTree = "<group>";
+		};
+		741713A02E3625AD00FE8607 /* Notifications */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		7419E8AB2E1D4B5900734A0F /* testFormats */ = {
@@ -88,8 +97,8 @@
 		749249232DD9F9BD00FF66EB = {
 			isa = PBXGroup;
 			children = (
-				749249492DDB8DAF00FF66EB /* polish_learner */,
 				7492492D2DD9F9BD00FF66EB /* Products */,
+				749249492DDB8DAF00FF66EB /* polish_learner */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +113,7 @@
 		749249492DDB8DAF00FF66EB /* polish_learner */ = {
 			isa = PBXGroup;
 			children = (
+				741713A02E3625AD00FE8607 /* Notifications */,
 				74012DA22E26B52400F328EB /* AddingMainView.swift */,
 				7419E8AB2E1D4B5900734A0F /* testFormats */,
 				748907A72E1C2E6300AB4D9C /* ReviewPhase */,
@@ -118,6 +128,8 @@
 				749249462DDB8DAF00FF66EB /* Flashcard.swift */,
 				749249472DDB8DAF00FF66EB /* polish_learner.entitlements */,
 				749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */,
+				741713A12E3625E700FE8607 /* AppDelegate.swift */,
+				741713A72E36312A00FE8607 /* SettingsView.swift */,
 			);
 			path = polish_learner;
 			sourceTree = "<group>";
@@ -142,6 +154,7 @@
 				7407EA312E146A690088FA03 /* LearnPhase */,
 				7407EA342E1484F20088FA03 /* ListFlashCards */,
 				740FA9532E1988D100EE1C13 /* ai_logic */,
+				741713A02E3625AD00FE8607 /* Notifications */,
 				7419E8AB2E1D4B5900734A0F /* testFormats */,
 				748907A72E1C2E6300AB4D9C /* ReviewPhase */,
 			);
@@ -215,8 +228,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7492494A2DDB8DAF00FF66EB /* ContentView.swift in Sources */,
+				741713A82E36312A00FE8607 /* SettingsView.swift in Sources */,
 				7492494B2DDB8DAF00FF66EB /* Flashcard.swift in Sources */,
 				7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */,
+				741713A22E3625E700FE8607 /* AppDelegate.swift in Sources */,
 				74012DA32E26B52E00F328EB /* AddingMainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,10 +365,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = polish_learner/polish_learner.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "polish-learner-Info.plist";
@@ -377,10 +394,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = polish_learner/polish_learner.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "polish-learner-Info.plist";
