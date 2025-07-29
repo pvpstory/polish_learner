@@ -36,5 +36,5 @@ func NextButton(callFunction: @escaping () -> Void) -> some View{
         callFunction()
     }){
         Image(systemName: "arrow.right")
-    }
+    }.keyboardShortcut(.rightArrow, modifiers: [])
 }

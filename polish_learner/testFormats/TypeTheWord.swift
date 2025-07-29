@@ -26,6 +26,7 @@ struct TypeTheWord: View {
     @State var showResult: Bool = false
     @State var isCorrect: Bool = false
     @State var canClickNext: Bool = false
+    @FocusState var isTextFieldFocused: Bool
     
     
     
@@ -34,7 +35,7 @@ struct TypeTheWord: View {
         VStack{
             Text("Type the correct word").font(.largeTitle).fontWeight(.bold).offset(y: 25)
             HStack{
-                NextButton(callFunction: {}).opacity(0).offset(y: 50).padding(10)
+                NextButton(callFunction: {}).opacity(0).offset(y: 50).padding(10).disabled(true)
                 Spacer()
                 halfFlashCard(text: backsideShow)
                 
@@ -44,14 +45,15 @@ struct TypeTheWord: View {
                         NextButton(callFunction: onNextFlashcard)
                     }
                     else{
-                        NextButton(callFunction: {}).opacity(0)
+                        NextButton(callFunction: {}).opacity(0).disabled(true)
                     }
                 }.offset(y: 50).padding(10)
             }.frame(maxWidth: .infinity)
             
             TextField("Guees the word", text: $TypedWord).onSubmit {
                 onSubmitWord()
-            }
+            }.disabled(showResult)
+            .focused($isTextFieldFocused)
             .font(.title2)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(maxWidth: 600, maxHeight: 80)
@@ -79,8 +81,10 @@ struct TypeTheWord: View {
 
         }.task{
             backsideShow = backside_blured
+            isTextFieldFocused = true
         }
         .onChange(of: backside){
+            isTextFieldFocused = true
             backsideShow = backside_blured
             showResult = false
             TypedWord = ""
@@ -96,6 +100,7 @@ struct TypeTheWord: View {
         }.frame(width: 600, height: 600).padding(50)
     }
     func onSubmitWord(){
+        isTextFieldFocused = false
         backsideShow = backside
         showResult = true
         isCorrect = TypedWord.lowercased() == frontside.lowercased( )
