@@ -35,7 +35,7 @@ struct NotificationManager {
                 continue
             }
             
-            var dateComponents = calendar.dateComponents([.year, .hour, .minute], from: triggerDate)
+            var dateComponents = calendar.dateComponents([.year, .day, .hour, .minute], from: triggerDate)
             
             dateComponents.hour = calendar.component(.hour, from: settings.notificationTime)
             dateComponents.minute = calendar.component(.minute, from: settings.notificationTime)
@@ -43,7 +43,6 @@ struct NotificationManager {
             guard let checkTrigger = calendar.date(from: dateComponents), checkTrigger < Date() else{
                 continue
             }
-            
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             
