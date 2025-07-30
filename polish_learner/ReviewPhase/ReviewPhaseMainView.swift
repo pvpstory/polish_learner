@@ -48,6 +48,8 @@ struct ReviewPhaseMainView: View {
         }.task {
             //new session
             flashcardsCoppy = Array(flashcards)
+            print(flashcardsCoppy.map{$0.frontside})
+
             if flashcardsCoppy.count >= 1{
                 whatToShow  = "cards"
                 curBackside = flashcardsCoppy[currentIndex].backside
@@ -59,6 +61,7 @@ struct ReviewPhaseMainView: View {
         
     }
     func incrementIndex() {
+        print(flashcardsCoppy.map{$0.frontside})
         if currentIndex >= flashcardsCoppy.count - 1 {
             whatToShow = "noCards"
         }
@@ -68,6 +71,7 @@ struct ReviewPhaseMainView: View {
             curBackside = flashcardsCoppy[currentIndex].backside
             curFrontside = flashcardsCoppy[currentIndex].frontside
             curBluredBackside = flashcardsCoppy[currentIndex].backside_blured
+            print(curFrontside,currentIndex)
         }
         
         
@@ -79,7 +83,7 @@ struct ReviewPhaseMainView: View {
     func getALLPossibleChangeDates() -> [String]{
         var allChangeDates: [String] = []
         for i in 1...6{
-            var inDays = getPossibleChangeDates(grade: i, successesInARow: flashcardsCoppy[currentIndex].successfullReviewsInARow)
+            let inDays = getPossibleChangeDates(grade: i, successesInARow: flashcardsCoppy[currentIndex].successfullReviewsInARow)
             allChangeDates.append("\(inDays) days")
         }
         return allChangeDates
@@ -142,6 +146,8 @@ struct ReviewPhaseMainView: View {
                                      
         flashcardsCoppy[currentIndex].lastReview = Date.now
         flashcardsCoppy[currentIndex].nextReview = Date.now.addingTimeInterval(Double(nextReview * 86000))
+        print(flashcardsCoppy.map{$0.frontside},currentIndex)
+
         
     }
     

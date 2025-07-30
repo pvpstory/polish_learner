@@ -32,7 +32,7 @@ struct MultiChoiceWord: View {
         VStack{
             Text("Choose the correct word").font(.largeTitle).fontWeight(.bold).offset(y: -50)
             HStack{
-                NextButton(callFunction: {}).opacity(0).offset(y: 20).padding(10)
+                NextButton(callFunction: {}).opacity(0).offset(y: 20).padding(10).disabled(true)
                 Spacer()
                 halfFlashCard(text: backsideShow).offset(y: -50)
                 Spacer()
@@ -41,7 +41,7 @@ struct MultiChoiceWord: View {
                         NextButton(callFunction: onClickNext)
                     }
                     else{
-                        NextButton(callFunction: {}).opacity(0)
+                        NextButton(callFunction: {}).opacity(0).disabled(true)
                     }
                 }.offset(y: 20).padding(10)
             }

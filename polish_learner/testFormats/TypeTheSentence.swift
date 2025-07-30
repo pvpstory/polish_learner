@@ -25,6 +25,7 @@ struct TypeTheSentence: View {
     let definitions: [String]
     let incrementButtonFunc: () -> Void
     var evaluationButtonsText: [String] = ["grade 1", "grade 2", "grade 3", "grade 4", "grade 5", "grade 6"]
+    @FocusState var textFieldFocus: Bool
     @State var canShowEvaluation: Bool = false
     @State var canClickNext: Bool = false
     @State var backsideShow: String = ""
@@ -79,8 +80,9 @@ struct TypeTheSentence: View {
             TextField("Write the sentence", text: $typedSentence).onSubmit {
                 Task{
                     await onSubmit()
+                    
                 }
-            }
+            }.disabled(showResult).focused($textFieldFocus)
             .font(.title2)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .frame(maxWidth: 600, maxHeight: 80)
@@ -100,16 +102,23 @@ struct TypeTheSentence: View {
             for definition in definitions {
                 backsideShow += definition + "\n"
             }
+            textFieldFocus = true
+
+            
         }
         .onChange(of: backside){
+            textFieldFocus = true
+            backsideShow = ""
+
             for definition in definitions {
                 backsideShow += definition + "\n"
             }
-            canClickNext = false
-            canShowEvaluation = false
-            showResult = false
+            canShowEvaluation  = false
+            canClickNext  = false
             typedSentence = ""
+            showResult = false
             isCorrect = false
+            isLoading = false
         }
             
     }
@@ -133,6 +142,7 @@ struct TypeTheSentence: View {
         canShowEvaluation = true
         isCorrect = typedSentence.lowercased() == frontside.lowercased( )
         isLoading = false
+        textFieldFocus = false
     }
     func onGrade(grade: Int){
         canClickNext = true
