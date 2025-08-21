@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		74012DA32E26B52E00F328EB /* AddingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74012DA22E26B52400F328EB /* AddingMainView.swift */; };
-		740FA9352E19843900EE1C13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 740FA9342E19843900EE1C13 /* GoogleService-Info.plist */; };
 		740FA9382E19851400EE1C13 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9372E19851400EE1C13 /* FirebaseAI */; };
 		740FA93A2E19851400EE1C13 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA9392E19851400EE1C13 /* FirebaseAnalytics */; };
 		740FA94E2E1986D500EE1C13 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 740FA94D2E1986D500EE1C13 /* FirebaseAnalyticsCore */; };
@@ -21,12 +20,12 @@
 		7492494B2DDB8DAF00FF66EB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249462DDB8DAF00FF66EB /* Flashcard.swift */; };
 		7492494C2DDB8DAF00FF66EB /* polish_learnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */; };
 		7492494D2DDB8DAF00FF66EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749249442DDB8DAF00FF66EB /* Assets.xcassets */; };
+		74E18E7E2E575F6A00636133 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74E18E7D2E575F6A00636133 /* GoogleService-Info.plist */; };
 		74ED20AA2DE20F1500883C92 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 74ED20A92DE20F1500883C92 /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		74012DA22E26B52400F328EB /* AddingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingMainView.swift; sourceTree = "<group>"; };
-		740FA9342E19843900EE1C13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		741713A12E3625E700FE8607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741713A72E36312A00FE8607 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7492492C2DD9F9BD00FF66EB /* polish_learner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polish_learner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +35,8 @@
 		749249472DDB8DAF00FF66EB /* polish_learner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = polish_learner.entitlements; sourceTree = "<group>"; };
 		749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = polish_learnerApp.swift; sourceTree = "<group>"; };
 		74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "polish-learner-Info.plist"; sourceTree = SOURCE_ROOT; };
+		74E18E7A2E575EB500636133 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		74E18E7D2E575F6A00636133 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -97,6 +98,7 @@
 		749249232DD9F9BD00FF66EB = {
 			isa = PBXGroup;
 			children = (
+				74E18E7A2E575EB500636133 /* .gitignore */,
 				7492492D2DD9F9BD00FF66EB /* Products */,
 				749249492DDB8DAF00FF66EB /* polish_learner */,
 			);
@@ -123,13 +125,13 @@
 				7407EA152E1456EE0088FA03 /* ListLearnPhase */,
 				74DB2DEF2DE46EB9003D559D /* polish-learner-Info.plist */,
 				749249442DDB8DAF00FF66EB /* Assets.xcassets */,
-				740FA9342E19843900EE1C13 /* GoogleService-Info.plist */,
 				749249452DDB8DAF00FF66EB /* ContentView.swift */,
 				749249462DDB8DAF00FF66EB /* Flashcard.swift */,
 				749249472DDB8DAF00FF66EB /* polish_learner.entitlements */,
 				749249482DDB8DAF00FF66EB /* polish_learnerApp.swift */,
 				741713A12E3625E700FE8607 /* AppDelegate.swift */,
 				741713A72E36312A00FE8607 /* SettingsView.swift */,
+				74E18E7D2E575F6A00636133 /* GoogleService-Info.plist */,
 			);
 			path = polish_learner;
 			sourceTree = "<group>";
@@ -216,7 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7492494D2DDB8DAF00FF66EB /* Assets.xcassets in Resources */,
-				740FA9352E19843900EE1C13 /* GoogleService-Info.plist in Resources */,
+				74E18E7E2E575F6A00636133 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
